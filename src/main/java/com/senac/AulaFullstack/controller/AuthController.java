@@ -1,12 +1,11 @@
 package com.senac.AulaFullstack.controller;
 
 import com.senac.AulaFullstack.dto.LoginRequestDto;
-import com.senac.AulaFullstack.services.TokenService;
+import com.senac.AulaFullstack.service.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
