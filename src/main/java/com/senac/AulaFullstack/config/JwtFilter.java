@@ -1,10 +1,12 @@
 package com.senac.AulaFullstack.config;
 
 
+import com.senac.AulaFullstack.services.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -13,6 +15,9 @@ import java.io.IOException;
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
+
+    @Autowired
+    private TokenService tokenService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -30,12 +35,20 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String header = request.getHeader("Authorization");
 
-        if (header != null && header.startsWith("Bearer "))
-        {
-            String token = header.replace("Bearer ", "");
+        try {
+            if (header != null && header.startsWith("Bearer ")) {
+                String token = header.replace("Bearer ", "");
+                var validador = tokenService.validarToken(token);
 
+                String user = validador.getSubject();
+                System.out.println(user);
+            } else {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("Token não informado.");
+                return;
+            }
         }
-        else
+        catch (Exception e)
         {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Token não informado.");

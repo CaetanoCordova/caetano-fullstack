@@ -1,4 +1,4 @@
-package com.senac.AulaFullstack.service;
+package com.senac.AulaFullstack.services;
 
 public class UsuarioService {
     //em obras
