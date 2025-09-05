@@ -1,4 +1,4 @@
 package com.senac.AulaFullstack.dto;
 
-public record LoginRequestDto (String usuario, String senha){
+public record LoginRequestDto (String email, String senha){
 }

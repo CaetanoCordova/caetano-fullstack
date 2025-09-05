@@ -24,7 +24,9 @@ public class AuthController {
     @PostMapping("/login")
     @Operation(summary = "login", description = "Método responsável pelo login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto request){
-        var token = tokenService.gerarToken(request.usuario(), request.senha());
+
+
+        var token = tokenService.gerarToken(request);
 
         return ResponseEntity.ok(token);
     }
