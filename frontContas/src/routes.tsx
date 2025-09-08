@@ -1,5 +1,5 @@
 import Header from "./components/header/index";
-import Footer from "./components/header/index";
+import Footer from "./components/footer/index";
 
 import Home from "./paginas/home";
 import Sidebar from "./components/sidebar/index";
