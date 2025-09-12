@@ -41,7 +41,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 String token = header.replace("Bearer ", "");
                 var validador = tokenService.validarToken(token);
 
-                String user = validador.getSubject();
+                String user = validador.getNome();
                 System.out.println(user);
             } else {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
