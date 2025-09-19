@@ -1,6 +1,7 @@
 package com.senac.AulaFullstack.controller;
 
 import com.senac.AulaFullstack.dto.LoginRequestDto;
+import com.senac.AulaFullstack.dto.LoginResponseDto;
 import com.senac.AulaFullstack.service.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,7 +29,7 @@ public class AuthController {
 
         var token = tokenService.gerarToken(request);
 
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(new LoginResponseDto(token));
     }
 
 }
