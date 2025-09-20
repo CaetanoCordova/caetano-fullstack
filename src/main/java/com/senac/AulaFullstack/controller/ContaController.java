@@ -40,8 +40,20 @@ public class ContaController {
     }
 
     @PostMapping
-    @Operation(summary = "Cria/Salva alterações de contas.", description = "Método que cria as contas e as alterações em[...] (Regra de negócio placeholder).")
+    @Operation(summary = "Cria/Salva alterações de contas.", description = "Método que cria/salva as contas.")
     public ResponseEntity<?> salvaConta(@RequestBody Conta conta){
+        try{
+            var contaResponse = contaRepository.save(conta);
+
+            return ResponseEntity.ok(contaRepository);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping
+    @Operation(summary = "(PLACEHOLDER NÃO USE) atualiza de contas.", description = "Método que salva alterações feitas nas contas.")
+    public ResponseEntity<?> atualizaConta(@RequestBody Conta conta){
         try{
             var contaResponse = contaRepository.save(conta);
 

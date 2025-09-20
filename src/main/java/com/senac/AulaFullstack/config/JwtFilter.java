@@ -1,12 +1,15 @@
 package com.senac.AulaFullstack.config;
 
 
+import com.senac.AulaFullstack.model.Usuario;
 import com.senac.AulaFullstack.service.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -14,7 +17,6 @@ import java.io.IOException;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
-
 
     @Autowired
     private TokenService tokenService;
@@ -39,20 +41,29 @@ public class JwtFilter extends OncePerRequestFilter {
         try {
             if (header != null && header.startsWith("Bearer ")) {
                 String token = header.replace("Bearer ", "");
-                var validador = tokenService.validarToken(token);
+                var usuario = tokenService.validarToken(token);
 
-                String user = validador.getNome();
+                var autorizacao = new UsernamePasswordAuthenticationToken(
+                        usuario,
+                        null,
+                        usuario.getAuthorities());
+
+                SecurityContextHolder.getContext().setAuthentication(autorizacao);
+
+                filterChain.doFilter(request, response);
+
+                String user = usuario.getUsername();
                 System.out.println(user);
             } else {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Token não informado.");
+                response.getWriter().write("Token não informado. JwtFilter 1.");
                 return;
             }
         }
         catch (Exception e)
         {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Token não informado.");
+            response.getWriter().write("Token não informado. JwtFilter 2.");
             return;
         }
 

@@ -17,7 +17,7 @@ public class Token {
 
     private String token;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id", nullable = true)
     private Usuario usuario;
 }

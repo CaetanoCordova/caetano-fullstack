@@ -33,8 +33,7 @@ public class TokenService {
     @Autowired
     private TokenRepository tokenRepository;
 
-    public String gerarToken(LoginRequestDto loginRequestDto){
-        var usuario = usuarioRepository.findByEmail(loginRequestDto.email()).orElse(null);
+    public String gerarToken(Usuario usuario){
 
         Algorithm algorithm = Algorithm.HMAC256(secret);
 
@@ -56,7 +55,7 @@ public class TokenService {
         var tokenResult = tokenRepository.findByToken(token).orElse(null);
 
         if (tokenResult == null){
-            throw new IllegalArgumentException("Token invalido!");
+            throw new IllegalArgumentException("Token invalido. TokenService");
         }
 
         return tokenResult.getUsuario();

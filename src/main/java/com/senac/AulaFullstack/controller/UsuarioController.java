@@ -49,4 +49,18 @@ public class UsuarioController {
         }
     }
 
+
+
+    @PutMapping
+    @Operation(summary = "(PLACEHOLDER NÃO USE) Salva alterações e atualizações de usuários.", description = "Método que salva as alterações nos perfis de usuário.")
+    public ResponseEntity<?> atualizaUsuario(@RequestBody Usuario usuario){
+        try{
+            var usuarioResponse = usuarioRepository.save(usuario);
+
+            return ResponseEntity.ok(usuarioRepository);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }
