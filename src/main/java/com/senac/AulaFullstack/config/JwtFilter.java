@@ -1,6 +1,5 @@
 package com.senac.AulaFullstack.config;
 
-
 import com.senac.AulaFullstack.model.Usuario;
 import com.senac.AulaFullstack.service.TokenService;
 import jakarta.servlet.FilterChain;
@@ -22,7 +21,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private TokenService tokenService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String path = request.getRequestURI();
 

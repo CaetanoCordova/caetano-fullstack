@@ -19,7 +19,7 @@ public class ContaController {
     private ContaRepository contaRepository;
 
     @GetMapping("/{id}")
-    @Operation(summary = "contas.", description = "Método que retorna uma conta específica pelo iD.")
+    @Operation(summary = "Retorna uma conta pelo iD.", description = "Método que retorna uma conta específica através do iD.")
     public ResponseEntity<Conta> consultaPorId(@PathVariable Long id) {
         var conta = contaRepository.findById(id).orElse(null);
 
@@ -31,36 +31,61 @@ public class ContaController {
     }
 
     @GetMapping
-    @Operation(summary = "contas.", description = "Método que retorna todas as contas registradas.")
+    @Operation(summary = "Retorna as contas existentes.", description = "Método que retorna todas as contas existentes.")
 
-    //@Operation(summary = "contas.", description = "Método que calcula os custos da X e retorna o preço total da Y baseado em[...] (Regra de negócio).")
-    public ResponseEntity<?> consultaTodos(){
+    //@Operation(summary = "contas.", description = "Méthodo que calcula os custos da X e retorna o preço total da Y baseado em[...] (Regra de negócio).")
+    public ResponseEntity<?> consultaTodos() {
 
         return ResponseEntity.ok(contaRepository.findAll());
     }
 
     @PostMapping
-    @Operation(summary = "Cria/Salva alterações de contas.", description = "Método que cria/salva as contas.")
-    public ResponseEntity<?> salvaConta(@RequestBody Conta conta){
-        try{
+    @Operation(summary = "Cria uma conta nova.", description = "Método que cria as contas.")
+    public ResponseEntity<?> salvaConta(@RequestBody Conta conta) {
+        try {
             var contaResponse = contaRepository.save(conta);
 
             return ResponseEntity.ok(contaRepository);
-        }catch(Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
-    @PutMapping
-    @Operation(summary = "(PLACEHOLDER NÃO USE) atualiza de contas.", description = "Método que salva alterações feitas nas contas.")
-    public ResponseEntity<?> atualizaConta(@RequestBody Conta conta){
-        try{
-            var contaResponse = contaRepository.save(conta);
+    @PutMapping("/{id}")
+    @Operation(summary = "Atualiza uma conta existente.", description = "Método que atualiza os dados de uma conta já registrada.")
+    public ResponseEntity<?> atualizaConta(@PathVariable Long id, @RequestBody Conta contaAtualizada) {
+        return contaRepository.findById(id)
+                .map(conta -> {
+                    conta.setTitulo(contaAtualizada.getTitulo());
+                    conta.setDescricao(contaAtualizada.getDescricao());
+                    conta.setValor(contaAtualizada.getValor());
+                    conta.setDataVencimento(contaAtualizada.getDataVencimento());
+                    conta.setStatusConta(contaAtualizada.getStatusConta());
 
-            return ResponseEntity.ok(contaRepository);
-        }catch(Exception e){
-            return ResponseEntity.badRequest().build();
-        }
+                    var contaSalva = contaRepository.save(conta);
+                    return ResponseEntity.ok(contaSalva);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Remove uma conta existente.", description = "Método que deleta uma conta já registrada pelo ID.")
+    public ResponseEntity<?> deletaConta(@PathVariable Long id) {
+        return contaRepository.findById(id)
+                .map(conta -> {
+                    contaRepository.delete(conta);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+//    use este json
+//    {
+//        "titulo": "Conta de testes",
+//        "descricao": "uma conta pendente teste",
+//        "valor": "1000",
+//        "dataVencimento": "2025-12-31",
+//        "statusConta": "PENDENTE"
+//    }
 
 }
