@@ -94,7 +94,7 @@ function Login() {
       <button type="submit" className="btn btn-primary w-100">Entrar</button>
 
       <p className="text-center mt-3">
-        Não tem conta? <Link to="/cadastrese">Cadastre-se</Link>
+        Não tem conta? <Link to="/auth/cadastrese">Cadastre-se</Link>
       </p>
     </form>
   );

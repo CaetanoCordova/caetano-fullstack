@@ -19,7 +19,7 @@ function Register() {
       <button type="submit" className="btn btn-success w-100">Cadastrar</button>
 
       <p className="text-center mt-3">
-        Já tem conta? <a href="/login">Entre aqui</a>
+        Já tem conta? <a href="/auth/login">Entre aqui</a>
       </p>
     </form>
   );

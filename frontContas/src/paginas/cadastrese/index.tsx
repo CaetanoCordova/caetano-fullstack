@@ -63,7 +63,7 @@ function Cadastrese() {
       </button>
 
       <p className="text-center mt-3">
-        Já tem conta? <Link to="/login">Entre aqui</Link>
+        Já tem conta? <Link to="/auth/login">Entre aqui</Link>
       </p>
     </form>
   );
