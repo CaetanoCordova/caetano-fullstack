@@ -1,4 +1,4 @@
-function Register() {
+function LayoutCadastro() {
   return (
     <form>
       <div className="mb-3">
@@ -25,4 +25,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default LayoutCadastro;

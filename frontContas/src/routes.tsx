@@ -1,4 +1,5 @@
-import AuthLayout from "./components/LayoutAdmin";
+import LayoutAuth from "./components/LayoutAuth/index.tsx";
+import LayoutMain from "./components/LayoutMain/index.tsx";
 import Login from "./paginas/login";
 import Cadastrese from "./paginas/cadastrese";
 import Home from "./paginas/home/home.tsx";
@@ -6,18 +7,20 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-      <Routes>
-        <Route path="/auth" element={<AuthLayout />}>
-          <Route index element={<Navigate to="/auth/login" />} />
+    <Routes>
+      {/* Redireciona raiz para login */}
+      <Route path="/" element={<Navigate to="/auth/login" />} />
 
-          <Route path="login" element={<Login />} />
-          <Route path="cadastrese" element={<Cadastrese />} />
-        </Route>
+      <Route path="/auth" element={<LayoutAuth />}>
+        <Route path="login" element={<Login />} />
+        <Route path="cadastrese" element={<Cadastrese />} />
+      </Route>
 
-
-          <Route path="home" element={<Home />} />
-
-      </Routes>
+      <Route path="/" element={<LayoutMain />}>
+        <Route path="home" element={<Home />} />
+        {/* outras rotas logadas, ex: usuarios, contas... */}
+      </Route>
+    </Routes>
   );
 }
 

@@ -1,14 +1,10 @@
-
-
-function Footer() {
-    return (
-        <footer className="bg-dark text-light text-center py-3 mt-5">
+function Footer(){
+    return(
+        <footer className="bg-dark text-white text-center py-3">
             <p className="mb-0">
-                &copy; {new Date().getFullYear()} Caetano Cordova. Todos os direitos são meus meus meus apenas meus.
-
+                &copy; {new Date().getFullYear()} Caetano Córdova da Silva. Todos os Direitos Reservados.
             </p>
-        </footer>
-    );
+        </footer>);
 }
 
 export default Footer;
