@@ -45,7 +45,7 @@ public class ContaController {
         try {
             var contaResponse = contaRepository.save(conta);
 
-            return ResponseEntity.ok(contaRepository);
+            return ResponseEntity.ok(contaResponse);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

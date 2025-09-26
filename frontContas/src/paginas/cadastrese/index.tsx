@@ -38,7 +38,7 @@ function Cadastrese() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/login");
+    navigate("/auth/login");
   };
 
   return (

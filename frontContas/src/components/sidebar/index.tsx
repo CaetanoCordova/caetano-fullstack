@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Sidebar() {
 
     return (
-        <div className="bg-dark text-white h-100 p-3" style={{ width: '250px', minHeight: '70vh'}}>
+        <div className="bg-dark text-white h-100 p-5" style={{ width: '250px', minHeight: '88vh'}}>
             {/*<div className="text-center mb-4">
                 <img
                     src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjYwIiB2aWV3Qm94PSIwIDAgMjAwIDYwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iNjAiIGZpbGw9IiMyYzNlNTAiLz48dGV4dCB4PSIyMCIgeT0iNDAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIzMCIgZmlsbD0iI2ZmZiI+U3ViPC90ZXh0Pjx0ZXh0IHg9IjkzIiB5PSI0MCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjMwIiBmaWxsPSIjMzg1Zjc2Ij5GbG93PC90ZXh0Pjwvc3ZnPg=="
