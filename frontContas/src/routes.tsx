@@ -2,13 +2,15 @@ import LayoutAuth from "./components/LayoutAuth/index.tsx";
 import LayoutMain from "./components/LayoutMain/index.tsx";
 import Login from "./paginas/login";
 import Cadastrese from "./paginas/cadastrese";
-import Home from "./paginas/home/home.tsx";
 import { Navigate, Route, Routes } from "react-router-dom";
+import Contas from "./paginas/contas/contas.tsx";
+import Usuarios from "./paginas/usuarios/usuarios.tsx";
+import ContasEditar from "./paginas/contas/contasEditar.tsx";
+import ContasCriar from "./paginas/contas/contasCriar.tsx";
 
 function App() {
   return (
     <Routes>
-      {/* Redireciona raiz para login */}
       <Route path="/" element={<Navigate to="/auth/login" />} />
 
       <Route path="/auth" element={<LayoutAuth />}>
@@ -16,9 +18,11 @@ function App() {
         <Route path="cadastrese" element={<Cadastrese />} />
       </Route>
 
-      <Route path="/" element={<LayoutMain />}>
-        <Route path="home" element={<Home />} />
-        {/* outras rotas logadas, ex: usuarios, contas... */}
+      <Route path="/home" element={<LayoutMain />}>
+        <Route path="contas" element={<Contas />} />
+        <Route path="contas" element={<ContasCriar />} />
+        <Route path="contas/:id/editar" element={<ContasEditar />} />
+        <Route path="usuarios" element={<Usuarios />} />
       </Route>
     </Routes>
   );
