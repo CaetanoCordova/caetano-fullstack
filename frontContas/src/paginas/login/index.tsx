@@ -39,24 +39,8 @@ function Login() {
       console.log(token);
 
       if(token!=null){
-        navigator("/home")
+        navigator("/")
       }
-
-      // const response = await fetch(API_URL + "auth/login", {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(formData)
-      // });
-
-      // if(!response.ok){
-      //   throw new Error("Erro no login.")
-      // }
-
-      // const data : LoginResponse = await response.json();
-      
-      // console.log(data.token)
     }
     catch (error){
 

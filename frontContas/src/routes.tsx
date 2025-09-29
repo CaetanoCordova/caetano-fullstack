@@ -18,9 +18,9 @@ function App() {
         <Route path="cadastrese" element={<Cadastrese />} />
       </Route>
 
-      <Route path="/home" element={<LayoutMain />}>
+      <Route path="/" element={<LayoutMain />}>
         <Route path="contas" element={<Contas />} />
-        <Route path="contas" element={<ContasCriar />} />
+        <Route path="contas/criar" element={<ContasCriar />} />
         <Route path="contas/:id/editar" element={<ContasEditar />} />
         <Route path="usuarios" element={<Usuarios />} />
       </Route>

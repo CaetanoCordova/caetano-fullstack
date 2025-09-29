@@ -20,7 +20,7 @@ function Home() {
   async function fetchUsuarios() {
     try {
       const res = await axios.get("http://localhost:8080/usuarios");
-      console.log("Usuarios recebidos:", res.data); // só pra debug
+      //console.log("Usuarios recebidos:", res.data);
       setUsuarios(res.data);
     } catch (err) {
       console.error(err);

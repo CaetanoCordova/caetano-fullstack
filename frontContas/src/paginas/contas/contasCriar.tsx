@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 interface Conta {
@@ -9,12 +10,8 @@ interface Conta {
   statusConta: string;
 }
 
-interface ContasCriarProps {
-  setPagina: (pagina: { nome: string; id?: number }) => void;
-}
-
-function ContasCriar({ setPagina }: ContasCriarProps) {
-  // Estado inicial seguro
+function ContasCriar() {
+  const navigate = useNavigate();
   const [conta, setConta] = useState<Conta>({
     titulo: "",
     descricao: "",
@@ -23,16 +20,10 @@ function ContasCriar({ setPagina }: ContasCriarProps) {
     statusConta: "PENDENTE",
   });
 
-  // Função de submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await axios.post("http://localhost:8080/contas", conta);
-      setPagina({ nome: "contas" }); // volta pra lista
-    } catch (err) {
-      console.error("Erro ao criar conta:", err);
-      alert("Erro ao criar conta");
-    }
+    await axios.post("http://localhost:8080/contas", conta);
+    navigate("/contas");
   };
 
   return (
@@ -100,7 +91,7 @@ function ContasCriar({ setPagina }: ContasCriarProps) {
       <button
         type="button"
         className="btn btn-secondary"
-        onClick={() => setPagina({ nome: "contas" })}
+        onClick={() => navigate("/contas")}       
       >
         Cancelar
       </button>

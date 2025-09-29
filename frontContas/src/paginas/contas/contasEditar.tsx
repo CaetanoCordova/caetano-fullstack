@@ -1,3 +1,4 @@
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -10,34 +11,19 @@ interface Conta {
   statusConta: string;
 }
 
-interface ContaEditarProps {
-  id: number; // ID da conta que vai ser editada
-  setPagina: (pagina: { nome: string; id?: number }) => void; // para voltar à tabela
-}
-
-function ContasEditar({ id, setPagina }: ContaEditarProps) {
+function ContasEditar() {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [conta, setConta] = useState<Conta | null>(null);
 
-  // Buscar os dados da conta ao abrir a tela
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/contas/${id}`)
-      .then((res) => setConta(res.data))
-      .catch((err) => console.error("Erro ao buscar conta:", err));
+    axios.get(`http://localhost:8080/contas/${id}`).then((res) => setConta(res.data));
   }, [id]);
 
-  // Salvar alterações
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!conta) return;
-
-    try {
-      await axios.put(`http://localhost:8080/contas/${id}`, conta);
-      setPagina({ nome: "contas" }); // volta pra tabela
-    } catch (err) {
-      console.error("Erro ao atualizar conta:", err);
-      alert("Erro ao atualizar conta");
-    }
+    await axios.put(`http://localhost:8080/contas/${id}`, conta);
+    navigate("/contas"); // volta pra lista
   };
 
   if (!conta) return <p>Carregando...</p>;
@@ -103,7 +89,6 @@ function ContasEditar({ id, setPagina }: ContaEditarProps) {
       <button
         type="button"
         className="btn btn-secondary"
-        onClick={() => setPagina({ nome: "contas" })}
       >
         Cancelar
       </button>
