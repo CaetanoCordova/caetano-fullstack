@@ -21,9 +21,12 @@ function Contas() {
 
   // Deletar conta
   const handleDelete = async (id: number) => {
-    await axios.delete(`http://localhost:8080/contas/${id}`);
-    setContas(contas.filter((c) => c.id !== id));
-  };
+  const confirmar = window.confirm("Tem certeza que deseja excluir esta conta?");
+  if (!confirmar) return; // se cancelar, não faz nada
+
+  await axios.delete(`http://localhost:8080/contas/${id}`);
+  setContas(contas.filter((c) => c.id !== id));
+};
 
   return (
     <div className="container mt-4">

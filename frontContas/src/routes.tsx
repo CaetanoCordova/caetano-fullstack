@@ -11,7 +11,6 @@ import ContasCriar from "./paginas/contas/contasCriar.tsx";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/auth/login" />} />
 
       <Route path="/auth" element={<LayoutAuth />}>
         <Route path="login" element={<Login />} />
