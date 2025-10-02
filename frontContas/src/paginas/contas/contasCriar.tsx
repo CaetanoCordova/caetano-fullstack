@@ -86,7 +86,7 @@ function ContasCriar() {
       </div>
 
       <button type="submit" className="btn btn-primary me-2">
-        Criar
+        Salvar
       </button>
       <button
         type="button"
