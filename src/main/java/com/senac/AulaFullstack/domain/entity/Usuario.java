@@ -1,6 +1,5 @@
-package com.senac.AulaFullstack.model;
+package com.senac.AulaFullstack.domain.entity;
 
-import ch.qos.logback.core.joran.spi.ElementSelector;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,13 +29,16 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        // se tiver mais de uma hierarquia cria um case (professor recomendou)
+
         if ("ROLE_ADMIN".equals(this.role)) {
             return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),
                     new SimpleGrantedAuthority("ROLE_USER"));
-        }else{
+        } else {
             return List.of(new SimpleGrantedAuthority("ROLE_USER"));
         }
     }
+
 
     @Override
     public String getPassword() {
@@ -45,8 +47,26 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.nome;
+        return this.email;
     }
-    //adiconar status ativado para simular exclusão
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

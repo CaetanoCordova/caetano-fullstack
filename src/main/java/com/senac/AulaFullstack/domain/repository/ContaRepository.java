@@ -1,6 +1,6 @@
-package com.senac.AulaFullstack.repository;
+package com.senac.AulaFullstack.domain.repository;
 
-import com.senac.AulaFullstack.model.Conta;
+import com.senac.AulaFullstack.domain.entity.Conta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

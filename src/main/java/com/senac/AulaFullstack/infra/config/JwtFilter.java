@@ -1,7 +1,6 @@
-package com.senac.AulaFullstack.config;
+package com.senac.AulaFullstack.infra.config;
 
-import com.senac.AulaFullstack.model.Usuario;
-import com.senac.AulaFullstack.service.TokenService;
+import com.senac.AulaFullstack.application.service.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,7 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 || path.startsWith("/v3/api-docs")
                 || path.startsWith("/webjars")
                 //DESLIGA A SEGURANÇA
-                || path.startsWith("/")
+                //|| path.startsWith("/")
                 || path.startsWith("/swagger-ui"))
         {
             filterChain.doFilter(request,response);

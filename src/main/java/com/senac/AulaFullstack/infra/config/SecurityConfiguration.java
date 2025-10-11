@@ -1,4 +1,4 @@
-package com.senac.AulaFullstack.config;
+package com.senac.AulaFullstack.infra.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ public class SecurityConfiguration {
                                 .requestMatchers("/auth/login").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                 // DESLIGA A SEGURANÇA
-                                .requestMatchers("/**").permitAll()
+                                //.requestMatchers("/**").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/swagger-resources/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()

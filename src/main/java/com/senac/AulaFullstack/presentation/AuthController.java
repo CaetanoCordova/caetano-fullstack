@@ -1,9 +1,9 @@
-package com.senac.AulaFullstack.controller;
+package com.senac.AulaFullstack.presentation;
 
-import com.senac.AulaFullstack.dto.LoginRequestDto;
-import com.senac.AulaFullstack.dto.LoginResponseDto;
-import com.senac.AulaFullstack.service.TokenService;
-import com.senac.AulaFullstack.service.UsuarioService;
+import com.senac.AulaFullstack.application.dto.login.LoginRequestDto;
+import com.senac.AulaFullstack.application.dto.login.LoginResponseDto;
+import com.senac.AulaFullstack.application.service.TokenService;
+import com.senac.AulaFullstack.application.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

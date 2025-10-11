@@ -1,8 +1,11 @@
-package com.senac.AulaFullstack.controller;
+package com.senac.AulaFullstack.presentation;
 
-import com.senac.AulaFullstack.model.Usuario;
-import com.senac.AulaFullstack.repository.UsuarioRepository;
+import com.senac.AulaFullstack.application.dto.usuario.UsuarioResponseDto;
+import com.senac.AulaFullstack.application.service.UsuarioService;
+import com.senac.AulaFullstack.domain.entity.Usuario;
+import com.senac.AulaFullstack.domain.repository.UsuarioRepository;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +21,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
     @GetMapping("/{id}")
     @Operation(summary = "usuarios.", description = "Método que retorna um usuário específico pelo iD.")
     public ResponseEntity<Usuario> consultaPorId(@PathVariable Long id) {
@@ -30,11 +36,21 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
+//    @GetMapping
+//    @Operation(summary = "usuarios.", description = "Método que Retorna todos os usuários registrados.")
+//    public ResponseEntity<?> consultaTodos(){
+//
+//        return ResponseEntity.ok(usuarioRepository.findAll());
+//    }
+
     @GetMapping
     @Operation(summary = "usuarios.", description = "Método que Retorna todos os usuários registrados.")
-    public ResponseEntity<?> consultaTodos(){
-
-        return ResponseEntity.ok(usuarioRepository.findAll());
+    public ResponseEntity<List<UsuarioResponseDto>> consultaTodos(
+            @Parameter(description = "Parametro para a quantidade de registro por páginas.") @RequestParam Long take,
+            @Parameter(description = "Parametro para a quantidade de páginas.") @RequestParam Long page,
+            @Parameter(description = "Parametro do filtro.") @RequestParam(required = false) String filtro
+    ){
+        return ResponseEntity.ok(usuarioService.consultarPaginaDoFiltrado(take, page, filtro));
     }
 
     @PostMapping

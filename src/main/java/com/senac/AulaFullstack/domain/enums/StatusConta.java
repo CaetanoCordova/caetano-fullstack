@@ -1,4 +1,4 @@
-package com.senac.AulaFullstack.enums;
+package com.senac.AulaFullstack.domain.enums;
 
 public enum StatusConta {
     PENDENTE,

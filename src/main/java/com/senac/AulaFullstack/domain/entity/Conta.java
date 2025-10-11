@@ -1,6 +1,6 @@
-package com.senac.AulaFullstack.model;
+package com.senac.AulaFullstack.domain.entity;
 
-import com.senac.AulaFullstack.enums.StatusConta;
+import com.senac.AulaFullstack.domain.enums.StatusConta;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +18,7 @@ public class Conta {
     private Long id;
     private String titulo;
     private String descricao;
-    private float valor;
+    private Float valor;
     private Date dataVencimento;
 
     @Enumerated(EnumType.STRING)
