@@ -1,11 +1,15 @@
 package com.senac.AulaFullstack.application.service;
 
+import com.senac.AulaFullstack.application.dto.conta.ContaCriarDto;
 import com.senac.AulaFullstack.application.dto.conta.ContaResponseDto;
+import com.senac.AulaFullstack.domain.entity.Conta;
+import com.senac.AulaFullstack.domain.enums.StatusConta;
 import com.senac.AulaFullstack.domain.repository.ContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -13,6 +17,26 @@ public class ContaService {
 
     @Autowired
     private ContaRepository contaRepository;
+
+    // Metodo para registro de contas
+    public Conta registroConta(ContaCriarDto contaDto) {
+        return contaRepository.save(new Conta(null, contaDto.titulo(), contaDto.descricao(), contaDto.valor(), contaDto.dataVencimento(), StatusConta.PENDENTE));
+    }
+
+    // Metodo responsavel para admin ver todas os status de contas
+    public List<Conta> visualizarContasGeral(){
+        return contaRepository.findAll();
+    }
+
+    // Metodo responsavel para admin ver contas por id
+    public Optional<Conta> visualizarContasPorId(Long id){
+        return contaRepository.findById(id);
+    }
+
+    // Metodo responsavel para admin e assinante ver o status de sua conta
+    public Optional<Conta> visualizarContas(Long usuarioId){
+        return contaRepository.findById(usuarioId);
+    }
 
     public List<ContaResponseDto> consultarPaginaDoFiltrado(Long take, Long page, String filtro) {
         return contaRepository.findAll()

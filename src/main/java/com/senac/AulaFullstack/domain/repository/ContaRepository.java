@@ -10,6 +10,8 @@ import java.util.Optional;
 @Repository
 public interface ContaRepository extends JpaRepository<Conta,Long> {
 
+    Optional<Conta> findById(Long id);
+
     Optional<Conta> findByTitulo(String titulo);
 
     Optional<Conta> findByDataVencimento(Date dataVencimento);

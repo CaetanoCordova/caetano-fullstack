@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/auth")
-@Tag(name = "Controlador de autenticação", description = "Responsável por controlar a autenticação dos usuários.")
+@Tag(name = "Controlador de autenticação", description = "Controlador responsável pela autenticação do usuário na API com geração de um token")
 public class AuthController {
 
     @Autowired
@@ -27,18 +26,15 @@ public class AuthController {
     private UsuarioService usuarioService;
 
     @PostMapping("/login")
-    @Operation(summary = "login", description = "Método responsável pelo login")
+    @Operation(summary = "Login", description = "Método responsável pelo login de usuário com geração de token")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto request){
 
-        try {
-            var usuario = usuarioService.login(request);
-
-            var token = tokenService.gerarToken(usuario);
-
-            return ResponseEntity.ok(new LoginResponseDto(token));
-        } catch(Exception e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        if (!usuarioService.validarSenha(request)){
+            return ResponseEntity.badRequest().body("Usuário e/ou senha inválido!");
         }
-    }
 
+        var token = tokenService.gerarToken(request);
+
+        return ResponseEntity.ok(new LoginResponseDto(token));
+    }
 }

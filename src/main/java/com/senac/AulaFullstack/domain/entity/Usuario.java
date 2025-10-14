@@ -1,5 +1,7 @@
 package com.senac.AulaFullstack.domain.entity;
 
+import com.senac.AulaFullstack.application.dto.usuario.UsuarioRequestDto;
+import com.senac.AulaFullstack.application.dto.usuario.UsuarioResponseDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,14 +21,29 @@ import java.util.List;
 @Table(name = "usuarios")
 public class Usuario implements UserDetails {
 
+    public Usuario (UsuarioRequestDto usuarioRequest){
+        this.setCpf(usuarioRequest.cpf());
+        this.setNome(usuarioRequest.nome());
+        this.setEmail(usuarioRequest.email());
+        this.setSenha(usuarioRequest.senha());
+        this.setRole(usuarioRequest.role());
+
+        if(this.getDataCadastro() == null){
+            this.setDataCadastro(LocalDateTime.now());
+        }
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private String CPF;
+    private String cpf;
     private String email;
     private String senha;
+
     private String role;
+
+    private LocalDateTime dataCadastro;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -68,5 +86,9 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public UsuarioResponseDto toDtoResponse() {
+        return new UsuarioResponseDto(this);
     }
 }

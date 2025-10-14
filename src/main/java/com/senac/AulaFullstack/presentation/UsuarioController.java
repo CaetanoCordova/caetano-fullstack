@@ -1,5 +1,6 @@
 package com.senac.AulaFullstack.presentation;
 
+import com.senac.AulaFullstack.application.dto.usuario.UsuarioRequestDto;
 import com.senac.AulaFullstack.application.dto.usuario.UsuarioResponseDto;
 import com.senac.AulaFullstack.application.service.UsuarioService;
 import com.senac.AulaFullstack.domain.entity.Usuario;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +28,11 @@ public class UsuarioController {
 
     @GetMapping("/{id}")
     @Operation(summary = "usuarios.", description = "Método que retorna um usuário específico pelo iD.")
-    public ResponseEntity<Usuario> consultaPorId(@PathVariable Long id) {
-        var usuario = usuarioRepository.findById(id).orElse(null);
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<UsuarioResponseDto> consultarUsuarioPorId(@PathVariable Long id) {
+        var usuario = usuarioService.consultarPorId(id);
+
+        SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (usuario == null) {
             return ResponseEntity.notFound().build();
@@ -36,14 +41,15 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
-//    @GetMapping
-//    @Operation(summary = "usuarios.", description = "Método que Retorna todos os usuários registrados.")
-//    public ResponseEntity<?> consultaTodos(){
-//
-//        return ResponseEntity.ok(usuarioRepository.findAll());
-//    }
-
     @GetMapping
+    @Operation(summary = "usuarios.", description = "Método que Retorna todos os usuários registrados.")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<List<UsuarioResponseDto>> consultarTodosUsuarios() {
+        return ResponseEntity.ok(usuarioService.consultarTodosSemFiltro());
+    }
+
+    //Listagem de usuários com filtro
+    @GetMapping("/grid")
     @Operation(summary = "usuarios.", description = "Método que Retorna todos os usuários registrados.")
     public ResponseEntity<List<UsuarioResponseDto>> consultaTodos(
             @Parameter(description = "Parametro para a quantidade de registro por páginas.") @RequestParam Long take,
@@ -55,12 +61,31 @@ public class UsuarioController {
 
     @PostMapping
     @Operation(summary = "Cria/Salva alterações de usuários.", description = "Método que cria os usuários e as alterações nas contas de[...] (Regra de negócio placeholder).")
-    public ResponseEntity<?> salvaUsuario(@RequestBody Usuario usuario){
-        try{
-            var usuarioResponse = usuarioRepository.save(usuario);
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ASSINANTE')")
+    public ResponseEntity<UsuarioResponseDto> criarUsuario(@RequestBody UsuarioRequestDto usuario){
 
-            return ResponseEntity.ok(usuarioRepository);
-        }catch(Exception e){
+        try{
+            var usuarioResponse = usuarioService.salvarUsuario(usuario);
+
+            return ResponseEntity.ok(usuarioResponse);
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    //Criação de usuários ADM
+    @PostMapping("/adm")
+    @Operation(summary = "Criação de usuário ADM puxando do DeskTop", description = "Método responsável por criação de usuário adm")
+    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    public ResponseEntity<UsuarioResponseDto> criarAdm(@RequestBody UsuarioRequestDto usuario){
+
+        try{
+            var usuarioResponse = usuarioService.salvarUsuario(usuario);
+
+            return ResponseEntity.ok(usuarioResponse);
+
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }

@@ -20,52 +20,42 @@ public class JwtFilter extends OncePerRequestFilter {
     private TokenService tokenService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getRequestURI();
 
         if (path.equals("/auth/login")
                 || path.startsWith("/swagger-resources")
                 || path.startsWith("/v3/api-docs")
                 || path.startsWith("/webjars")
-                //DESLIGA A SEGURANÇA
-                //|| path.startsWith("/")
-                || path.startsWith("/swagger-ui"))
-        {
-            filterChain.doFilter(request,response);
+                || path.startsWith("/") // desabilita a necessidade de requisicao do token para funcionar o front
+                || path.startsWith("/swagger-ui")){
+
+            filterChain.doFilter(request, response);
             return;
         }
 
         String header = request.getHeader("Authorization");
 
-        try {
+        try{
             if (header != null && header.startsWith("Bearer ")) {
                 String token = header.replace("Bearer ", "");
                 var usuario = tokenService.validarToken(token);
 
-                var autorizacao = new UsernamePasswordAuthenticationToken(
-                        usuario,
-                        null,
-                        usuario.getAuthorities());
-
+                var autorizacao = new UsernamePasswordAuthenticationToken(usuario.getEmail(), null, usuario.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(autorizacao);
 
                 filterChain.doFilter(request, response);
 
-                String user = usuario.getUsername();
-                System.out.println(user);
             } else {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Token não informado. JwtFilter 1.");
+                response.getWriter().write("Token não informado!");
                 return;
             }
-        }
-        catch (Exception e)
-        {
+
+        }catch (Exception e){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Token não informado. JwtFilter 2.");
+            response.getWriter().write("Token não informado!");
             return;
         }
-
     }
 }

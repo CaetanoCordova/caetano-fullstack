@@ -2,6 +2,7 @@ package com.senac.AulaFullstack.application.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.senac.AulaFullstack.application.dto.login.LoginRequestDto;
 import com.senac.AulaFullstack.domain.entity.Token;
 import com.senac.AulaFullstack.domain.entity.Usuario;
 import com.senac.AulaFullstack.domain.repository.TokenRepository;
@@ -23,7 +24,7 @@ public class TokenService {
     @Value("${spring.tempo_expiracao}")
     private Long timeExpiration;
 
-    private String emissor = "GerenciadorStreaming";
+    private String emissor = "SubFlow";
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -31,7 +32,8 @@ public class TokenService {
     @Autowired
     private TokenRepository tokenRepository;
 
-    public String gerarToken(Usuario usuario){
+    public String gerarToken(LoginRequestDto loginRequestDto){
+        var usuario = usuarioRepository.findByEmail(loginRequestDto.email()).orElse(null);
 
         Algorithm algorithm = Algorithm.HMAC256(secret);
 
@@ -52,14 +54,14 @@ public class TokenService {
 
         var tokenResult = tokenRepository.findByToken(token).orElse(null);
 
-        if (tokenResult == null){
-            throw new IllegalArgumentException("Token invalido. TokenService");
+        if (tokenResult == null) {
+            throw new IllegalArgumentException("Token inválido!");
         }
 
         return tokenResult.getUsuario();
     }
 
-    private Instant gerarDataExpiracao(){
+    private Instant gerarDataExpiracao() {
         var dataAtual = LocalDateTime.now();
         dataAtual = dataAtual.plusMinutes(timeExpiration);
 

@@ -8,7 +8,7 @@ public record UsuarioResponseDto(Long id, String nome, String cpf, String email,
         this(
                 usuario.getId(),
                 usuario.getNome(),
-                usuario.getCPF(),
+                usuario.getCpf(),
                 usuario.getEmail(),
                 usuario.getRole()
         );
