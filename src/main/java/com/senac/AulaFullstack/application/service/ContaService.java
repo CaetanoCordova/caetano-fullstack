@@ -18,29 +18,9 @@ public class ContaService {
     @Autowired
     private ContaRepository contaRepository;
 
-    // Metodo para registro de contas
-    public Conta registroConta(ContaCriarDto contaDto) {
+    public Conta registrarContas(ContaCriarDto contaDto) {
         return contaRepository.save(new Conta(null, contaDto.titulo(), contaDto.descricao(), contaDto.valor(), contaDto.dataVencimento(), StatusConta.PENDENTE));
     }
-
-
-    //TODO
-    // Metodo responsavel para admin ver todas os status de contas
-    //public List<Conta> visualizarContasGeral(){
-        //return contaRepository.findAll();
-    //}
-
-    //TODO
-    // Metodo responsavel para admin ver contas por id
-    //public Optional<Conta> visualizarContasPorId(Long id){
-        //return contaRepository.findById(id);
-    //}
-
-    //TODO
-    // Metodo responsavel para admin e assinante ver o status de sua conta
-    //public Optional<Conta> visualizarContas(Long usuarioId){
-        //return contaRepository.findById(usuarioId);
-    //}
 
     public List<ContaResponseDto> consultarPaginaDoFiltrado(Long take, Long page, String filtro) {
         return contaRepository.findAll()

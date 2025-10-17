@@ -27,7 +27,7 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @GetMapping("/{id}")
-    @Operation(summary = "usuarios.", description = "Método que retorna um usuário específico pelo iD.")
+    @Operation(summary = "Retorna um usuário.", description = "Método que retorna um usuário específico pelo iD.")
     //@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<UsuarioResponseDto> consultarUsuarioPorId(@PathVariable Long id) {
         var usuario = usuarioService.consultarPorId(id);
@@ -42,7 +42,7 @@ public class UsuarioController {
     }
 
     @GetMapping
-    @Operation(summary = "usuarios.", description = "Método que Retorna todos os usuários registrados.")
+    @Operation(summary = "Retorna todos os usuarios.", description = "Método que Retorna todos os usuários registrados.")
     //@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<List<UsuarioResponseDto>> consultarTodosUsuarios() {
         return ResponseEntity.ok(usuarioService.consultarTodosSemFiltro());
@@ -50,7 +50,7 @@ public class UsuarioController {
 
     //Listagem de usuários com filtro
     @GetMapping("/grid")
-    @Operation(summary = "usuarios.", description = "Método que Retorna todos os usuários registrados.")
+    @Operation(summary = "Retorna usuários em páginas.", description = "Método que Retorna todos os usuários registrados.")
     public ResponseEntity<List<UsuarioResponseDto>> consultaTodos(
             @Parameter(description = "Parametro para a quantidade de registro por páginas.") @RequestParam Long take,
             @Parameter(description = "Parametro para a quantidade de páginas.") @RequestParam Long page,
@@ -60,7 +60,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    @Operation(summary = "Cria/Salva alterações de usuários.", description = "Método que cria os usuários e as alterações nas contas de[...] (Regra de negócio placeholder).")
+    @Operation(summary = "Cria/Salva alterações de usuários.", description = "Método que cria os usuários.")
     //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ASSINANTE')")
     public ResponseEntity<UsuarioResponseDto> criarUsuario(@RequestBody UsuarioRequestDto usuario){
 
@@ -75,20 +75,21 @@ public class UsuarioController {
     }
 
     //Criação de usuários ADM
-    @PostMapping("/adm")
-    @Operation(summary = "Criação de usuário ADM puxando do DeskTop", description = "Método responsável por criação de usuário adm")
-    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    public ResponseEntity<UsuarioResponseDto> criarAdm(@RequestBody UsuarioRequestDto usuario){
-
-        try{
-            var usuarioResponse = usuarioService.salvarUsuario(usuario);
-
-            return ResponseEntity.ok(usuarioResponse);
-
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
+    //TODO NÃO SEI O QUE FAZ, COPIEI DO AFONSO LMAO
+//    @PostMapping("/adm")
+//    @Operation(summary = "Criação de usuário ADM puxando do DeskTop", description = "Método responsável por criação de usuário adm")
+//    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+//    public ResponseEntity<UsuarioResponseDto> criarAdm(@RequestBody UsuarioRequestDto usuario){
+//
+//        try{
+//            var usuarioResponse = usuarioService.salvarUsuario(usuario);
+//
+//            return ResponseEntity.ok(usuarioResponse);
+//
+//        } catch (Exception e) {
+//            return ResponseEntity.badRequest().build();
+//        }
+//    }
 
 //    use este json
 //    {
