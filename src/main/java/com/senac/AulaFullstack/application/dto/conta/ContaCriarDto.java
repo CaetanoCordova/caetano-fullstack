@@ -7,6 +7,6 @@ import java.util.Date;
 public record ContaCriarDto(
     @JsonProperty("titulo") String titulo,
     @JsonProperty("descricao") String descricao,
-    @JsonProperty("valor") String valor,
+    @JsonProperty("valor") Float valor,
     @JsonProperty("dataVencimento") Date dataVencimento){
 }

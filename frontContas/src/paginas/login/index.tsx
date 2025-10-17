@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { loginSucesso } from "../../store/authSlice";
 
 interface LoginRequest {
   email: string,
@@ -13,6 +15,8 @@ interface LoginResponse {
 
 function Login() {
   const navigator = useNavigate();
+
+  const dispatch = useDispatch();
 
   const API_URL = "http://localhost:8080/"
 
@@ -39,9 +43,14 @@ function Login() {
       console.log(token);
 
       if(token!=null){
-        navigator("/")
+          dispatch(loginSucesso({
+            usuario:{email:formData.email, nome: ""},
+            token:token
+        }));
       }
+      navigator("/")
     }
+  
     catch (error){
 
     }

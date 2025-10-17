@@ -27,7 +27,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 || path.startsWith("/swagger-resources")
                 || path.startsWith("/v3/api-docs")
                 || path.startsWith("/webjars")
-                || path.startsWith("/") // desabilita a necessidade de requisicao do token para funcionar o front
+                //|| path.startsWith("/") // desabilita a necessidade de requisicao do token para funcionar o front
                 || path.startsWith("/swagger-ui")){
 
             filterChain.doFilter(request, response);

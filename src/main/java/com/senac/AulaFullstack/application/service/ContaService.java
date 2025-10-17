@@ -23,20 +23,24 @@ public class ContaService {
         return contaRepository.save(new Conta(null, contaDto.titulo(), contaDto.descricao(), contaDto.valor(), contaDto.dataVencimento(), StatusConta.PENDENTE));
     }
 
+
+    //TODO
     // Metodo responsavel para admin ver todas os status de contas
-    public List<Conta> visualizarContasGeral(){
-        return contaRepository.findAll();
-    }
+    //public List<Conta> visualizarContasGeral(){
+        //return contaRepository.findAll();
+    //}
 
+    //TODO
     // Metodo responsavel para admin ver contas por id
-    public Optional<Conta> visualizarContasPorId(Long id){
-        return contaRepository.findById(id);
-    }
+    //public Optional<Conta> visualizarContasPorId(Long id){
+        //return contaRepository.findById(id);
+    //}
 
+    //TODO
     // Metodo responsavel para admin e assinante ver o status de sua conta
-    public Optional<Conta> visualizarContas(Long usuarioId){
-        return contaRepository.findById(usuarioId);
-    }
+    //public Optional<Conta> visualizarContas(Long usuarioId){
+        //return contaRepository.findById(usuarioId);
+    //}
 
     public List<ContaResponseDto> consultarPaginaDoFiltrado(Long take, Long page, String filtro) {
         return contaRepository.findAll()
@@ -47,7 +51,7 @@ public class ContaService {
                 .collect(Collectors.toList());
     }
 
-    //Funções: Implementar a função para "pagar" uma conta e uma função que verifica e atualiza contas para o status VENCIDA.
+    //TODO Funções: Implementar a função para "pagar" uma conta e uma função que verifica e atualiza contas para o status VENCIDA.
 
     //pagaConta
     //if (conta paga){
