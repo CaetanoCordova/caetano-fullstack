@@ -1,32 +1,21 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { buscarTodosUsuarios, type Usuario } from "../../services/usuarioService";
 
-interface Usuario {
-  id: number;
-  cpf: string;
-  email: string;
-  nome: number;
-  senha: string;
-  role: string;
-}
+function Usuario() {
 
-function Home() {
-  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
+    const [usuarios, setUsuarios] = useState<Usuario[]>([]);
 
-  useEffect(() => {
-    fetchUsuarios();
-  }, []);
 
-  async function fetchUsuarios() {
-    try {
-      const res = await axios.get("http://localhost:8080/usuarios");
-      //console.log("Usuarios recebidos:", res.data);
-      setUsuarios(res.data);
-    } catch (err) {
-      console.error(err);
-      alert("Erro ao carregar usuarios");
-    }
-  }
+    useEffect(() => {
+
+        const carregarUsuarios = async () => {
+            const usuarios = await buscarTodosUsuarios();
+            setUsuarios(usuarios);
+        };
+
+        carregarUsuarios();
+
+    }, []);
 
   return (
     <div className="container mt-4">
@@ -63,4 +52,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Usuario;

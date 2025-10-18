@@ -1,24 +1,13 @@
-import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loginSucesso } from "../../store/authSlice";
-
-interface LoginRequest {
-  email: string,
-  senha: string
-}
-
-interface LoginResponse {
-  token: string,
-}
+import { LoginNovo, type LoginRequest} from "../../services/authService";
 
 function Login() {
   const navigator = useNavigate();
 
   const dispatch = useDispatch();
-
-  const API_URL = "http://localhost:8080/"
 
   const [formData, setFormData] = useState<LoginRequest>({
     email:'',
@@ -37,9 +26,10 @@ function Login() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await axios.post<LoginResponse>(API_URL+"auth/login",formData)
 
-      const token = response.data.token;
+      const loginResponse = await LoginNovo(formData);
+      const token = loginResponse.token;
+
       console.log(token);
 
       if(token!=null){
