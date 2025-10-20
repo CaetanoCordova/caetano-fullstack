@@ -5,6 +5,7 @@ function Cadastrese() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const SignupFeedback = window.alert("Cadastro realizado com êxito.");
     navigate("/auth/login");
   };
 
@@ -21,8 +22,13 @@ function Cadastrese() {
       </div>
 
       <div className="mb-3">
+        <label className="form-label">CPF</label>
+        <input type="email" className="form-control" placeholder="Digite seu e-mail" maxLength={14} />
+      </div>
+
+      <div className="mb-3">
         <label className="form-label">Senha</label>
-        <input type="password" className="form-control" placeholder="Digite sua senha" />
+        <input type="password" className="form-control" placeholder="Digite sua senha" minLength={3}/>
       </div>
 
       <button type="submit" className="btn btn-success w-100">
