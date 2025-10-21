@@ -26,7 +26,7 @@ public class Usuario implements UserDetails {
         this.setNome(usuarioRequest.nome());
         this.setEmail(usuarioRequest.email());
         this.setSenha(usuarioRequest.senha());
-        this.setRole(usuarioRequest.role());
+        this.setRole("ROLE_USER");
 
         if(this.getDataCadastro() == null){
             this.setDataCadastro(LocalDateTime.now());

@@ -1,5 +1,8 @@
 package com.senac.AulaFullstack.application.dto.usuario;
 
-public record UsuarioRequestDto (Long id, String nome, String cpf, String email, String senha, String role){
+import java.time.LocalDateTime;
+
+public record UsuarioRequestDto (String nome, String cpf, String email, String senha
+){
 
 }

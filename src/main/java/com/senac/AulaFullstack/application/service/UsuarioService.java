@@ -58,9 +58,9 @@ public class UsuarioService {
         var usuario = usuarioRepository.findByCpf(usuarioRequest.cpf())
                 .map(u -> {
                     u.setNome(usuarioRequest.nome());
-                    u.setSenha(usuarioRequest.senha());
-                    u.setRole(usuarioRequest.role());
                     u.setEmail(usuarioRequest.email());
+                    u.setCpf(usuarioRequest.cpf());
+                    u.setSenha(usuarioRequest.senha());
                     return u;
                 })
                 .orElse(new Usuario(usuarioRequest));
