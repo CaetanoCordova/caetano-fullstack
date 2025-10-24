@@ -27,6 +27,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 || path.startsWith("/swagger-resources")
                 || path.startsWith("/v3/api-docs")
                 || path.startsWith("/webjars")
+                || path.startsWith("/auth/esquecisenha")
                 //DESLIGA A SEGURANÇA
                 //|| path.startsWith("/")
                 || path.startsWith("/swagger-ui")){
@@ -42,7 +43,10 @@ public class JwtFilter extends OncePerRequestFilter {
                 String token = header.replace("Bearer ", "");
                 var usuario = tokenService.validarToken(token);
 
-                var autorizacao = new UsernamePasswordAuthenticationToken(usuario.getEmail(), null, usuario.getAuthorities());
+                var autorizacao = new UsernamePasswordAuthenticationToken(
+                        usuario,
+                        null,
+                        usuario.autorizacao());
                 SecurityContextHolder.getContext().setAuthentication(autorizacao);
 
                 filterChain.doFilter(request, response);

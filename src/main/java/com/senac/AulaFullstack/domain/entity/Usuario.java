@@ -45,6 +45,8 @@ public class Usuario implements UserDetails {
 
     private LocalDateTime dataCadastro;
 
+    private String tokenSenha;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // se tiver mais de uma hierarquia cria um case (professor recomendou)
