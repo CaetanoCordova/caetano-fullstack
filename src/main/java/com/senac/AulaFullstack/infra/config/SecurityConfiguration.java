@@ -25,6 +25,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers("/auth/login").permitAll()
+                                .requestMatchers("/auth/esquecisenha").permitAll()
+                                .requestMatchers("/auth/alterarsenha").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                 // DESLIGA A SEGURANÇA
                                 //.requestMatchers("/**").permitAll()

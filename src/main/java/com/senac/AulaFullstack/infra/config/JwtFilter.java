@@ -28,6 +28,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 || path.startsWith("/v3/api-docs")
                 || path.startsWith("/webjars")
                 || path.startsWith("/auth/esquecisenha")
+                || path.startsWith("/auth/alterarsenha")
                 //DESLIGA A SEGURANÇA
                 //|| path.startsWith("/")
                 || path.startsWith("/swagger-ui")){

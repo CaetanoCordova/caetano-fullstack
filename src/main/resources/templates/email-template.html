@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensagem da Empresa de Cartas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #d7f8e3 0%, #7fcf99 100%);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            background-color: #ffffff;
+            margin: 40px auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #4caf50, #388e3c);
+            color: white;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: 1px;
+        }
+
+        .content {
+            padding: 32px;
+            color: #333;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .content p {
+            margin-bottom: 16px;
+        }
+
+        .mensagem {
+            background-color: #f3fdf6;
+            border-left: 4px solid #4caf50;
+            padding: 16px;
+            border-radius: 8px;
+            color: #2e7d32;
+            font-style: italic;
+        }
+
+        .footer {
+            background-color: #f1f8f4;
+            text-align: center;
+            padding: 16px;
+            font-size: 13px;
+            color: #4e6e56;
+        }
+
+        .footer span {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Empresa de Cartas</h1>
+    </div>
+
+    <div class="content">
+        <p>Olá,</p>
+
+        <p>Você recebeu uma nova mensagem:</p>
+
+        <div class="mensagem">
+            ${mensagem}
+        </div>
+
+        <p>Enviada em: <strong>${dataEnvio}</strong></p>
+        <p>Agradecemos pela confiança em nossos serviços.</p>
+    </div>
+
+    <div class="footer">
+        <p>Atenciosamente,</p>
+        <p><span>Equipe Empresa de Cartas</span></p>
+    </div>
+</div>
+</body>
+</html>

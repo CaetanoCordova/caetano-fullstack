@@ -1,5 +1,6 @@
 package com.senac.AulaFullstack.presentation;
 
+import com.senac.AulaFullstack.application.dto.login.AlterarSenhaDto;
 import com.senac.AulaFullstack.application.dto.login.EsqueciMinhaSenhaDto;
 import com.senac.AulaFullstack.application.dto.login.LoginRequestDto;
 import com.senac.AulaFullstack.application.dto.login.LoginResponseDto;
@@ -61,4 +62,14 @@ public class AuthController {
         return ResponseEntity.ok("Código enviado com sucesso.");
     }
 
+    @PostMapping("/alterarsenha")
+    @Operation(summary = "Nova senha", description = "Método responsável pela alteração de senhas com código de recuperação")
+    public ResponseEntity<?> AlterarSenha(@RequestBody AlterarSenhaDto alterarSenhaDto) {
+        try{
+            usuarioService.AlterarSenha(alterarSenhaDto);
+            return ResponseEntity.ok().build();
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.senac.AulaFullstack.application.service;
 
+import com.senac.AulaFullstack.application.dto.login.AlterarSenhaDto;
 import com.senac.AulaFullstack.application.dto.login.EsqueciMinhaSenhaDto;
 import com.senac.AulaFullstack.application.dto.login.LoginRequestDto;
 import com.senac.AulaFullstack.application.dto.usuario.UsuarioPrincipalDto;
@@ -100,7 +101,8 @@ public class UsuarioService {
 
     public String gerarCodigoAleatorio(int length) {
 
-        final String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        final String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        //abcdefghijklmnopqrstuvwxyz
         SecureRandom random = new SecureRandom();
         StringBuilder senha = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
@@ -115,15 +117,28 @@ public class UsuarioService {
         var usuario = usuarioRepository.findByEmail(esqueciMinhaSenhaDto.email()).orElse(null);
 
         if(usuario != null){
-            var codigo = gerarCodigoAleatorio(8);
+            var codigo = gerarCodigoAleatorio(4);
             usuario.setTokenSenha(codigo);
 
             usuarioRepository.save(usuario);
 
-            iEnviaMail.enviarEmailSimples(esqueciMinhaSenhaDto.email(),
+            iEnviaMail.voidEnviarEmailComTemplate(esqueciMinhaSenhaDto.email(),
                     "Codigo de recuperacao",
-                    gerarCodigoAleatorio(8)
+                    gerarCodigoAleatorio(4)
             );
+        }
+    }
+
+    public void AlterarSenha(AlterarSenhaDto alterarSenhaDto) {
+
+        var usuario = usuarioRepository
+                .findByEmailAndTokenSenha(
+                        alterarSenhaDto.email(),
+                        alterarSenhaDto.token())
+                .orElse(null);
+        if(usuario != null){
+            usuario.setSenha(alterarSenhaDto.senha());
+            usuarioRepository.save(usuario);
         }
     }
 }
