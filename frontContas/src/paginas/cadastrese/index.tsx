@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export interface Usuario {
@@ -19,19 +19,54 @@ function Cadastrese() {
     senha: "",
   });
 
-  const [confirmarSenha, setConfirmarSenha] = useState(""); 
+  const [confirmarSenha, setConfirmarSenha] = useState("");
+  const [senhaError, setSenhaError] = useState("");
+
+  const validatePasswords = () => {
+    if (confirmarSenha && usuario.senha !== confirmarSenha) {
+      setSenhaError("As senhas não coincidem");
+    } else {
+      setSenhaError("");
+    }
+  };
+
+  useEffect(() => {
+    validatePasswords();
+  }, [usuario.senha, confirmarSenha]);
   
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try{
-    await axios.post("http://localhost:8080/usuarios", usuario);
+    e.preventDefault(); 
 
-    } catch(e){
-
+    if (usuario.senha !== confirmarSenha) {
+      setSenhaError("As senhas não coincidem");
+      return;
     }
-    const SignupFeedback = window.alert("Cadastro realizado com êxito.");
-    navigate("/auth/login");
+
+    try {
+      const response = await axios.post("http://localhost:8080/usuarios/cadastro", usuario);
+      window.alert("Cadastro realizado com êxito.");
+      navigate("/auth/login");
+    } catch (error: any) {
+      console.error("Erro ao cadastrar:", error.response || error.message);
+      window.alert("Erro ao cadastrar. Verifique os dados ou o servidor.");
+    }
   };
+
+
+  // MASK PRA CPF
+
+  // const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   // Remove tudo que não for número
+  //   let value = e.target.value.replace(/\D/g, '');
+  //   // Limita a 11 dígitos
+  //   if (value.length > 11) value = value.slice(0, 11);
+  //   // Aplica a máscara: ###.###.###-##
+  //   value = value
+  //     .replace(/(\d{3})(\d)/, '$1.$2')
+  //     .replace(/(\d{3})(\d)/, '$1.$2')
+  //     .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+  //   setUsuario({ ...usuario, cpf: value });
+  // };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -65,7 +100,8 @@ function Cadastrese() {
           value={usuario.cpf}
           onChange={(e) => setUsuario({ ...usuario, cpf: e.target.value })}
           placeholder="Digite seu CPF"
-          maxLength={14}
+          minLength={11}
+          maxLength={11}
           required/>
       </div>
 
@@ -91,6 +127,7 @@ function Cadastrese() {
           placeholder="Confirme sua senha"
           minLength={3}
           />
+          {senhaError && <p style={{ color: "red" }}>{senhaError}</p>}
       </div>
 
       <button type="submit" className="btn btn-success w-100">
@@ -105,36 +142,3 @@ function Cadastrese() {
 }
 
 export default Cadastrese;
-
-{/*
-import { Link } from "react-router-dom";
-
-function Cadastrese() {
-  return (
-    <form>
-      <div className="mb-3">
-        <label className="form-label">Nome</label>
-        <input type="text" className="form-control" placeholder="Digite seu nome" />
-      </div>
-
-      <div className="mb-3">
-        <label className="form-label">E-mail</label>
-        <input type="email" className="form-control" placeholder="Digite seu e-mail" />
-      </div>
-
-      <div className="mb-3">
-        <label className="form-label">Senha</label>
-        <input type="password" className="form-control" placeholder="Digite sua senha" />
-      </div>
-
-      <button type="submit" className="btn btn-success w-100">Cadastrar</button>
-
-      <p className="text-center mt-3">
-        Já tem conta? <Link to="/login">Entre aqui</Link>
-      </p>
-    </form>
-  );
-}
-
-export default Cadastrese;
-*/}

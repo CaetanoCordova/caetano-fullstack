@@ -63,20 +63,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.consultarPaginaDoFiltrado(take, page, filtro));
     }
 
-    // codigo antigo. nostalgia.
-//    @PostMapping
-//    @Operation(summary = "Cria um usuario novo.", description = "Método que cria usarios.")
-//    public ResponseEntity<?> salvaUsuario(@RequestBody UsuarioCriarDto usuario) {
-//        try {
-//            var usuarioResponse = usuarioRepository.save(usuario);
-//
-//            return ResponseEntity.ok(usuarioResponse);
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
-
-    @PostMapping
+    @PostMapping("/cadastro")
     @Operation(summary = "Cria um usuario novo.")
     public ResponseEntity<?> salvaUsuario(@RequestBody UsuarioRequestDto usuarioDto) {
         try {
@@ -116,40 +103,6 @@ public class UsuarioController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
-
-    //TODO POST QUE SALVA E/OU ATUALIZA. PARTE DA REFATORAÇÃO
-//    @PostMapping
-//    @Operation(summary = "Cria/Salva alterações de usuários.", description = "Método que cria os usuários.")
-//    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-//    public ResponseEntity<UsuarioResponseDto> criarUsuario(@RequestBody UsuarioRequestDto usuario){
-//
-//        try{
-//            var usuarioResponse = usuarioService.salvarUsuario(usuario);
-//
-//            return ResponseEntity.ok(usuarioResponse);
-//
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
-
-    //Criação de usuários ADM
-    //TODO NÃO SEI O QUE FAZ, COPIEI DO AFONSO LMAO
-//    @PostMapping("/adm")
-//    @Operation(summary = "Criação de usuário ADM puxando do DeskTop", description = "Método responsável por criação de usuário adm")
-//    //@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-//    public ResponseEntity<UsuarioResponseDto> criarAdm(@RequestBody UsuarioRequestDto usuario){
-//
-//        try{
-//            var usuarioResponse = usuarioService.salvarUsuario(usuario);
-//
-//            return ResponseEntity.ok(usuarioResponse);
-//
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
-
 //    use este json
 //    {
 //        "nome": "Caetano",

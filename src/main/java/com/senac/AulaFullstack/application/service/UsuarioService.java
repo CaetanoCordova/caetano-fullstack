@@ -124,7 +124,7 @@ public class UsuarioService {
 
             iEnviaMail.voidEnviarEmailComTemplate(esqueciMinhaSenhaDto.email(),
                     "Codigo de recuperacao",
-                    gerarCodigoAleatorio(4)
+                    usuario.getTokenSenha()
             );
         }
     }

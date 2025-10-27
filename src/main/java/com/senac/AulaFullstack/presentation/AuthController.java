@@ -50,8 +50,8 @@ public class AuthController {
         return ResponseEntity.ok("Código enviado com sucesso.");
     }
 
-    @PostMapping("/esquecisenha")
-    @Operation(summary = "Esqueci a senha", description = "Método responsável pela recuperação de senha esquecida")
+    @PostMapping("/enviarcodigo")
+    @Operation(summary = "Enviar código de recuperação", description = "Método responsável pela recuperação de senha esquecida através do email")
     public ResponseEntity<?> EsqueciMinhaSenha(@RequestBody EsqueciMinhaSenhaDto esqueciMinhaSenhaDto) {
         try{
             usuarioService.EsqueciMinhaSenha(esqueciMinhaSenhaDto);
@@ -63,7 +63,7 @@ public class AuthController {
     }
 
     @PostMapping("/alterarsenha")
-    @Operation(summary = "Nova senha", description = "Método responsável pela alteração de senhas com código de recuperação")
+    @Operation(summary = "Trocar a senha", description = "Método responsável pela alteração de senhas com código de recuperação")
     public ResponseEntity<?> AlterarSenha(@RequestBody AlterarSenhaDto alterarSenhaDto) {
         try{
             usuarioService.AlterarSenha(alterarSenhaDto);

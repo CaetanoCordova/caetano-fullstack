@@ -33,6 +33,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.OPTIONS, "/swagger-resources/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()
+                                .requestMatchers("/usuarios/cadastro").permitAll()
                                 .requestMatchers("/usuarios").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
