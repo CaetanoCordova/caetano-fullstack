@@ -1,6 +1,6 @@
-package com.senac.senacadminconfig.model.DAO;
+package com.senac.caetanodesktop.model.DAO;
 
-import com.senac.senacadminconfig.model.Endereco;
+import com.senac.caetanodesktop.model.Endereco;
 import jakarta.persistence.EntityManager;
 
 public class EnderecoDAO {

@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.senac.senacadminconfig.controller.TesteApiBancoController">
+<AnchorPane prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.senac.caetanodesktop.controller.TesteApiBancoController">
     <children>
         <Button layoutX="234.0" layoutY="161.0" mnemonicParsing="false" onAction="#voltar" text="Voltar" />
         <Button layoutX="14.0" layoutY="161.0" mnemonicParsing="false" onAction="#consultarCep" text="Consultar" />

@@ -1,4 +1,4 @@
-package com.senac.senacadminconfig.controller;
+package com.senac.caetanodesktop.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -7,8 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class MenuController {
-
-
 
     public void sair(){
         System.exit(0);
@@ -19,8 +17,5 @@ public class MenuController {
         Scene scene = new Scene(loader.load());
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
-
     }
-
-
 }

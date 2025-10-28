@@ -1,4 +1,4 @@
-package com.senac.senacadminconfig.Utils;
+package com.senac.caetanodesktop.utils;
 
 import jakarta.persistence.EntityManager;
 

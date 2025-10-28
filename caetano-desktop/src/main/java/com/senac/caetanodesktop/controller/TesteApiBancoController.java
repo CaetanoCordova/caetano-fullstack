@@ -1,8 +1,8 @@
-package com.senac.senacadminconfig.controller;
+package com.senac.caetanodesktop.controller;
 
-import com.senac.senacadminconfig.Utils.JPAUtils;
-import com.senac.senacadminconfig.model.DAO.EnderecoDAO;
-import com.senac.senacadminconfig.model.Endereco;
+import com.senac.caetanodesktop.model.DAO.EnderecoDAO;
+import com.senac.caetanodesktop.model.Endereco;
+import com.senac.caetanodesktop.utils.JPAUtils;
 import jakarta.persistence.EntityManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,18 +23,15 @@ import java.nio.charset.StandardCharsets;
 
 public class TesteApiBancoController {
 
-
     @FXML
     private TextArea txtEndereco;
 
     @FXML
     private TextField txtCep;
 
-
     public void consultarCep(ActionEvent event){
 
         try {
-
             var urlEndereco = "https://viacep.com.br/ws/"+txtCep.getText()+"/json/";
             URL url = new  URL(urlEndereco);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -58,26 +55,17 @@ public class TesteApiBancoController {
                 }
                 in.close();
                 txtEndereco.setText(response.toString());
-
                 salvarEnderco(response.toString(),txtCep.getText());
-
             }
             conn.disconnect();
-
         }catch (Exception e){
 
         }
-
-
-
-
 
         Alert alert =new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Dados Diditados!");
         alert.setHeaderText(null);
         alert.setContentText("Cep" + txtCep.getText());
-
-
 
         alert.showAndWait();
     }
@@ -89,7 +77,6 @@ public class TesteApiBancoController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
-
 
     private boolean salvarEnderco(String endereco, String cep){
 

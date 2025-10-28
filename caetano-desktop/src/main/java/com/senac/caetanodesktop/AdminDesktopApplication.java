@@ -1,4 +1,4 @@
-package com.senac.senacadminconfig;
+package com.senac.caetanodesktop;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

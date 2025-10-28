@@ -1,5 +1,4 @@
-package com.senac.senacadminconfig.model;
-
+package com.senac.caetanodesktop.model;
 
 import jakarta.persistence.*;
 
