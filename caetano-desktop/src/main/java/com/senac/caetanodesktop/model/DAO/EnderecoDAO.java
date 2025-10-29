@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 
 public class EnderecoDAO {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public EnderecoDAO(EntityManager entityManager){
 

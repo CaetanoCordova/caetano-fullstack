@@ -1,10 +1,13 @@
 package com.senac.caetanodesktop.utils;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 public class JPAUtils {
-    public static EntityManager getEntityManager() {
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("caetanoPU");
 
-        return new EntityManager();
+    public static EntityManager getEntityManager() {
+        return emf.createEntityManager();
     }
 }
