@@ -63,16 +63,16 @@ public class TesteApiBancoController {
         }
 
         Alert alert =new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Dados Diditados!");
+        alert.setTitle("Dados Diditados.");
         alert.setHeaderText(null);
-        alert.setContentText("Cep" + txtCep.getText());
+        alert.setContentText("CEP: " + txtCep.getText());
 
         alert.showAndWait();
     }
 
     public void voltar(ActionEvent event) throws  Exception {
         FXMLLoader loader = new FXMLLoader(getClass()
-                .getResource("/com/senac/senacadminconfig/menu-view.fxml"));
+                .getResource("/com/senac/caetanodesktop/menu-view.fxml"));
         Scene scene = new Scene(loader.load());
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -83,7 +83,7 @@ public class TesteApiBancoController {
         try {
             EntityManager entityManager = JPAUtils.getEntityManager();
             EnderecoDAO enderecoDAO = new EnderecoDAO(entityManager);
-
+            //AQUI COMECOU A DAR PROBLEMA >:[
             Endereco enderecoBanco = new Endereco();
             enderecoBanco.setEndereco(endereco);
             enderecoBanco.setCep(cep);
