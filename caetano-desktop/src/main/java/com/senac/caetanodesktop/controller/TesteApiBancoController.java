@@ -31,6 +31,14 @@ public class TesteApiBancoController {
 
     public void consultarCep(ActionEvent event){
 
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Dados Digitados");
+        alert.setHeaderText(null);
+        alert.setContentText("CEP: " + txtCep.getText());
+
+        alert.showAndWait();
+
+
         try {
             var urlEndereco = "https://viacep.com.br/ws/"+txtCep.getText()+"/json/";
             URL url = new  URL(urlEndereco);
@@ -62,12 +70,12 @@ public class TesteApiBancoController {
 
         }
 
-        Alert alert =new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Dados Diditados.");
-        alert.setHeaderText(null);
-        alert.setContentText("CEP: " + txtCep.getText());
-
-        alert.showAndWait();
+//        Alert alert =new Alert(Alert.AlertType.INFORMATION);
+//        alert.setTitle("Dados Diditados.");
+//        alert.setHeaderText(null);
+//        alert.setContentText("CEP: " + txtCep.getText());
+//
+//        alert.showAndWait();
     }
 
     public void voltar(ActionEvent event) throws  Exception {

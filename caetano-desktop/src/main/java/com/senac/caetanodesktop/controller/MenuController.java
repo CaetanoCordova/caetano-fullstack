@@ -18,4 +18,11 @@ public class MenuController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
     }
+
+    public void cadastroAdministrador(ActionEvent event) throws Exception{
+        FXMLLoader loaderAdm = new FXMLLoader(getClass().getResource("/com/senac/caetanodesktop/cadastroadm-view.fxml"));
+        Scene sceneConfigAdm = new Scene(loaderAdm.load());
+        Stage stageConfigAdm = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stageConfigAdm.setScene(sceneConfigAdm);
+    }
 }
