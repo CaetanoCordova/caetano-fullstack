@@ -29,12 +29,11 @@ public class SecurityConfiguration {
                                 .requestMatchers("/auth/alterarsenha").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                 // DESLIGA A SEGURANÇA
-                                .requestMatchers("/**").permitAll()
+                                //.requestMatchers("/**").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/swagger-resources/**").permitAll()
                                 .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/usuarios/cadastro").permitAll()
-                                .requestMatchers("/usuarios").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

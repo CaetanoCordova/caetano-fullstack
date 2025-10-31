@@ -31,7 +31,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 || path.startsWith("/auth/alterarsenha")
                 || path.startsWith("/usuarios/cadastro")
                 //DESLIGA A SEGURANÇA
-                || path.startsWith("/")
+                //|| path.startsWith("/")
                 || path.startsWith("/swagger-ui")){
 
             filterChain.doFilter(request, response);

@@ -11,12 +11,11 @@ api.interceptors.request.use(
         //consulta
         const state = store.getState();
         const token = state.auth.token;
+        debugger;
 
         if (token){
-            config.headers.Authorization = `Bearer${token}`;
+            config.headers.Authorization = `Bearer ${token}`;
         }
-
-
 
         return config
     },

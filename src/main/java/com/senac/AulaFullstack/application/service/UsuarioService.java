@@ -3,9 +3,7 @@ package com.senac.AulaFullstack.application.service;
 import com.senac.AulaFullstack.application.dto.login.AlterarSenhaDto;
 import com.senac.AulaFullstack.application.dto.login.EsqueciMinhaSenhaDto;
 import com.senac.AulaFullstack.application.dto.login.LoginRequestDto;
-import com.senac.AulaFullstack.application.dto.usuario.UsuarioPrincipalDto;
-import com.senac.AulaFullstack.application.dto.usuario.UsuarioRequestDto;
-import com.senac.AulaFullstack.application.dto.usuario.UsuarioResponseDto;
+import com.senac.AulaFullstack.application.dto.usuario.*;
 import com.senac.AulaFullstack.domain.entity.Usuario;
 import com.senac.AulaFullstack.domain.interfaces.IEnviaMail;
 import com.senac.AulaFullstack.domain.repository.UsuarioRepository;
@@ -59,6 +57,33 @@ public class UsuarioService {
                 .stream()
                 .map(UsuarioResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    public AdmResponseDto salvarAdm(AdmRequestDto admRequest){
+        if(!secret.equalsIgnoreCase(admRequest.secret())){
+            throw new IllegalArgumentException("Senha incorreta");
+        }
+
+        if (usuarioRepository.findByCpf(admRequest.cpf()).isPresent()){
+            throw new IllegalArgumentException("Já existe um usuário cadastrado com este CPF.");
+        }
+
+        if (usuarioRepository.findByEmail(admRequest.email()).isPresent()){
+            throw new IllegalArgumentException("Já existe um usuário cadastrado com este CPF.");
+        }
+
+        var usuario = new Usuario();
+        usuario.setNome(admRequest.nome());
+        usuario.setCpf(admRequest.cpf());
+        usuario.setEmail(admRequest.email());
+        usuario.setSenha(admRequest.senha());
+
+        usuario.setRole("ROLE_ADMIN");
+        usuario.setDataCadastro(LocalDateTime.now());
+
+        usuarioRepository.save(usuario);
+
+        return new AdmResponseDto(usuario);
     }
 
     @Transactional

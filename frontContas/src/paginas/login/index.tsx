@@ -31,7 +31,7 @@ function Login() {
       const token = loginResponse.token;
 
       console.log(token);
-
+        debugger;
       if(token!=null){
           dispatch(loginSucesso({
             usuario:{email:formData.email, nome: ""},

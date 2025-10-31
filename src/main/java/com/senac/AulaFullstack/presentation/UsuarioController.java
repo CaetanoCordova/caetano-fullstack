@@ -1,9 +1,6 @@
 package com.senac.AulaFullstack.presentation;
 
-import com.senac.AulaFullstack.application.dto.usuario.UsuarioCriarDto;
-import com.senac.AulaFullstack.application.dto.usuario.UsuarioRequestDto;
-import com.senac.AulaFullstack.application.dto.usuario.UsuarioResponseDto;
-import com.senac.AulaFullstack.application.dto.usuario.UsuarioUpdateDto;
+import com.senac.AulaFullstack.application.dto.usuario.*;
 import com.senac.AulaFullstack.application.service.UsuarioService;
 import com.senac.AulaFullstack.domain.entity.Usuario;
 import com.senac.AulaFullstack.domain.repository.UsuarioRepository;
@@ -103,6 +100,25 @@ public class UsuarioController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @PostMapping("/adm")
+    @Operation(summary = "Criação de usuário ADM puxando do DeskTop", description = "Método responsável por criação de usuário adm")
+//@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ASSINANTE')")
+    public ResponseEntity<?> criarAdm(@RequestBody AdmRequestDto admRequest){
+
+        try {
+            var admResponse = usuarioService.salvarAdm(admRequest);
+            return ResponseEntity.ok(admResponse);
+
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Ocorreu um erro, tente novamente mais tarde.");
+        }
+    }
+
+
 //    use este json
 //    {
 //        "nome": "Caetano",
