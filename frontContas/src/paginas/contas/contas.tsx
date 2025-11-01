@@ -1,15 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
-interface Conta {
-  id: number;
-  titulo: string;
-  descricao: string;
-  valor: number;
-  dataVencimento: string;
-  statusConta: string;
-}
+import { buscarTodasContas, type Conta } from "../../services/contaService";
 
 function Contas() {
 
@@ -17,7 +9,14 @@ function Contas() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:8080/contas").then((res) => setContas(res.data));
+
+      const carregarContas = async () => {
+          const contas = await buscarTodasContas();
+          setContas(contas);
+      };
+
+      carregarContas();
+
   }, []);
 
   const contasOrdenadas = [...contas].sort((a, b) => {
@@ -36,11 +35,13 @@ function Contas() {
   return (
     <div className="container mt-4">
       <h2>Lista de Contas</h2>
+
+      {/*  BOTAO CRIAR 
       <div className="mb-3">
         <Link to="/contas/criar" className="btn btn-success">
           Criar Conta
         </Link>
-      </div>
+      </div> */}
 
       <table className="table table-striped">
         <thead>

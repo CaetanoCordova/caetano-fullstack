@@ -26,7 +26,8 @@ function Usuario() {
             <th>Nome</th>
             <th>E-mail</th>
             <th>CPF</th>
-            <th>Cargo</th>
+            <th>Permissão</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -43,6 +44,18 @@ function Usuario() {
                 <td>{c.email}</td>
                 <td>{c.cpf}</td>
                 <td>{c.role}</td>
+                <td>
+                    <button
+                      className="btn btn-warning btn-sm me-2"
+                    >
+                      Histórico
+                    </button>
+                    <button
+                      className="btn btn-warning btn-sm"
+                    >
+                      Contas
+                    </button>
+                  </td>
               </tr>
             ))
           )}
