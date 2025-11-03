@@ -91,7 +91,6 @@ public class TesteApiBancoController {
         try {
             EntityManager entityManager = JPAUtils.getEntityManager();
             EnderecoDAO enderecoDAO = new EnderecoDAO(entityManager);
-            //AQUI COMECOU A DAR PROBLEMA >:[
             Endereco enderecoBanco = new Endereco();
             enderecoBanco.setEndereco(endereco);
             enderecoBanco.setCep(cep);

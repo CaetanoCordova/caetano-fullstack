@@ -61,6 +61,7 @@ public class CadastroAdm {
             //escrever no corpo da minha requisicao
 
             try(OutputStream os = com.getOutputStream()) {
+                //AQUI COMECOU A DAR PROBLEMA >:[
                 os.write(json.getBytes());
             }
 

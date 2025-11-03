@@ -114,7 +114,7 @@ public class UsuarioController {
             return ResponseEntity.badRequest().body(e.getMessage());
 
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Ocorreu um erro, tente novamente mais tarde.");
+            return ResponseEntity.internalServerError().body("Ocorreu um erro.");
         }
     }
 
