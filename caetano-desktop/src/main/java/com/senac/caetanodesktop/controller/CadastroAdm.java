@@ -1,5 +1,9 @@
 package com.senac.caetanodesktop.controller;
 
+import com.senac.caetanodesktop.model.DAO.EnderecoDAO;
+import com.senac.caetanodesktop.model.Endereco;
+import com.senac.caetanodesktop.utils.JPAUtils;
+import jakarta.persistence.EntityManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +14,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -31,6 +37,12 @@ public class CadastroAdm {
     @FXML
     private TextField txtSenha;
 
+    @FXML
+    private TextArea txtEndereco;
+
+    @FXML
+    private TextField txtCep;
+
     public void voltar (ActionEvent event) throws Exception{
         FXMLLoader loaderTeste = new FXMLLoader(getClass().getResource("/com/senac/caetanodesktop/menu-view.fxml"));
         Scene sceneTeste = new Scene(loaderTeste.load()); //Scene passe o loader
@@ -40,54 +52,145 @@ public class CadastroAdm {
 
     public void enviarUsuarioAdmBanco(ActionEvent event) {
         try {
+            var urlEndereco = "https://viacep.com.br/ws/"+txtCep.getText()+"/json/";
+            URL url1 = new  URL(urlEndereco);
+            HttpURLConnection conn = (HttpURLConnection) url1.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setDoOutput(true);
+            conn.setRequestProperty("Content-Type","application/json");
 
-            var urlCaetano = "http://localhost:8080/usuarios/adm";
+            int statusCep = conn.getResponseCode();
 
-            URL url = new URL(urlCaetano); //criando endereco
-            HttpURLConnection com = (HttpURLConnection) url.openConnection(); //conectando
-            com.setRequestMethod("POST"); //setando um metodo
-            com.setDoOutput(true); //esperando uma resposta
-            com.setRequestProperty("Content-Type", "application/json"); //setando propriedades
+            if(statusCep == 200){
+                try {
+                    var urlCaetano = "http://localhost:8080/usuarios/adm";
 
-            //Criar um Json via texto, contatenar texto com os valores da minha variavel
+                    URL url2 = new URL(urlCaetano); //criando endereco
+                    HttpURLConnection com = (HttpURLConnection) url2.openConnection(); //conectando
+                    com.setRequestMethod("POST"); //setando um metodo
+                    com.setDoOutput(true); //esperando uma resposta
+                    com.setRequestProperty("Content-Type", "application/json"); //setando propriedades
 
-            String json = String.format(" {\"secret\":\"%s\", \"nome\":\"%s\", \"cpf\":\"%s\", \"email\":\"%s\", \"senha\":\"%s\"}",
-                    txtSecret.getText(),
-                    txtNome.getText(),
-                    txtCpf.getText(),
-                    txtEmail.getText(),
-                    txtSenha.getText());
+                    //Cria um Json via texto e concatena
 
-            //escrever no corpo da minha requisicao
+                    String json = String.format(" {\"secret\":\"%s\", \"nome\":\"%s\", \"cpf\":\"%s\", \"email\":\"%s\", \"senha\":\"%s\", \"cep\":\"%s\", \"endereco\":\"%s\"}",
+                            txtSecret.getText(),
+                            txtNome.getText(),
+                            txtCpf.getText(),
+                            txtEmail.getText(),
+                            txtSenha.getText(),
+                            txtCep.getText(),
+                            txtEndereco.getText());
 
-            try(OutputStream os = com.getOutputStream()) {
-                //AQUI COMECOU A DAR PROBLEMA >:[
-                os.write(json.getBytes());
+                    try(OutputStream os = com.getOutputStream()) {
+                        os.write(json.getBytes());
+                    }
+
+                    int statusAdm = com.getResponseCode(); //vai la na api e vai retornar o metodo
+
+                    if (statusAdm == 200){
+
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Cadastro feito.");
+                        alert.setHeaderText("ADMIN cadastrado com sucesso.");
+
+                        alert.showAndWait();
+
+                    }else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Erro");
+                        alert.setHeaderText("Algo deu errado. Verifique se este e-mail e/ou CPF já foram utilizados.");
+                        alert.showAndWait();
+                    }
+                    com.disconnect();
+                }
+                catch (Exception e){
+
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erro");
+                alert.setHeaderText("Algo deu errado. Verifique se este é um CEP inválido.");
+                alert.showAndWait();
             }
+            conn.disconnect();
+        }catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText("Algo deu errado. Verifique a excessão.");
+            alert.showAndWait();
+        }
+    }
 
-            //resposta
+    public void consultarCep(ActionEvent event){
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.setTitle("Dados Digitados");
+//        alert.setHeaderText(null);
+//        alert.setContentText("CEP: " + txtCep.getText());
+//        alert.showAndWait();
 
-            int status = com.getResponseCode(); //vai la na api e vai retornar o metodo
+//            String json = String.format("{\"email\":\"%s\",\"senha\":\"%s\"}",txtCep.getText(),txtEndereco.getText());
+//
+//            try (OutputStream os = conn.getOutputStream()){
+//                os.write(json.getBytes());
+//            }
 
-            if (status == 200){
+        try {
+            var urlEndereco = "https://viacep.com.br/ws/"+txtCep.getText()+"/json/";
+            URL url = new  URL(urlEndereco);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setDoOutput(true);
+            conn.setRequestProperty("Content-Type","application/json");
+
+
+            int status = conn.getResponseCode();
+
+            if(status == 200){
+                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                txtEndereco.setText(response.toString());
+
+                salvarEnderco(response.toString(),txtCep.getText());
+
+                enviarUsuarioAdmBanco(new ActionEvent());
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Cadastro feito.");
-                alert.setHeaderText("ADMIN cadastrado com sucesso.");
-
+                alert.setTitle("Validação de CEP");
+                alert.setHeaderText("CEP válido.");
                 alert.showAndWait();
-
-            }else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erro.");
-                alert.setHeaderText(null);
-
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Validação de CEP");
+                alert.setHeaderText("CEP inválido.");
                 alert.showAndWait();
             }
-            com.disconnect();
-
-        } catch (Exception e){
+            conn.disconnect();
+        }catch (Exception e){
 
         }
+    }
+
+    private boolean salvarEnderco(String endereco, String cep){
+
+        try {
+            EntityManager entityManager = JPAUtils.getEntityManager();
+            EnderecoDAO enderecoDAO = new EnderecoDAO(entityManager);
+            Endereco enderecoBanco = new Endereco();
+            enderecoBanco.setEndereco(endereco);
+            enderecoBanco.setCep(cep);
+
+            enderecoDAO.salvar(enderecoBanco);
+
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
     }
 }

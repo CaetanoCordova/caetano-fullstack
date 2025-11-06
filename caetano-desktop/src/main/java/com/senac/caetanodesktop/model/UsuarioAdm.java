@@ -1,9 +1,6 @@
 package com.senac.caetanodesktop.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class UsuarioAdm {
@@ -19,6 +16,11 @@ public class UsuarioAdm {
     private String email;
 
     private String senha;
+
+    private String cep;
+
+    @Column(length = 5000)
+    private  String endereco;
 
     public Long getId() {
         return id;
@@ -58,5 +60,21 @@ public class UsuarioAdm {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 }

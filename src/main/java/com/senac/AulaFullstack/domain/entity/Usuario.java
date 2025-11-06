@@ -40,6 +40,8 @@ public class Usuario implements UserDetails {
     private String cpf;
     private String email;
     private String senha;
+    private String cep;
+    private String endereco;
 
     private String role;
 

@@ -77,6 +77,9 @@ public class UsuarioService {
         usuario.setCpf(admRequest.cpf());
         usuario.setEmail(admRequest.email());
         usuario.setSenha(admRequest.senha());
+        usuario.setCep(admRequest.cep());
+        usuario.setEndereco(admRequest.endereco());
+
 
         usuario.setRole("ROLE_ADMIN");
         usuario.setDataCadastro(LocalDateTime.now());

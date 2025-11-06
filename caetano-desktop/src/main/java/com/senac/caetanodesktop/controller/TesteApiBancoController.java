@@ -63,7 +63,7 @@ public class TesteApiBancoController {
                 }
                 in.close();
                 txtEndereco.setText(response.toString());
-                salvarEnderco(response.toString(),txtCep.getText());
+//                salvarEnderco(response.toString(),txtCep.getText());
             }
             conn.disconnect();
         }catch (Exception e){
