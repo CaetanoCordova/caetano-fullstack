@@ -1,9 +1,7 @@
 package com.senac.caetanodesktop.controller;
 
-import com.senac.caetanodesktop.model.DAO.EnderecoDAO;
-import com.senac.caetanodesktop.model.Endereco;
-import com.senac.caetanodesktop.utils.JPAUtils;
-import jakarta.persistence.EntityManager;
+import com.google.gson.Gson;
+import com.senac.caetanodesktop.model.DAO.EnderecoResponseDto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,6 +48,8 @@ public class CadastroAdm {
         stageTeste.setScene(sceneTeste);
     }
 
+
+
     public void enviarUsuarioAdmBanco(ActionEvent event) {
         try {
             var urlEndereco = "https://viacep.com.br/ws/"+txtCep.getText()+"/json/";
@@ -63,6 +63,20 @@ public class CadastroAdm {
 
             if(statusCep == 200){
                 try {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String inputLine;
+                    StringBuilder response = new StringBuilder();
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+                    txtEndereco.setText(response.toString());
+
+                    Gson gson = new Gson();
+
+                    EnderecoResponseDto enderecoResponseDto = gson.fromJson( txtEndereco.getText(), EnderecoResponseDto.class);
+
+
                     var urlCaetano = "http://localhost:8080/usuarios/adm";
 
                     URL url2 = new URL(urlCaetano); //criando endereco
@@ -80,7 +94,8 @@ public class CadastroAdm {
                             txtEmail.getText(),
                             txtSenha.getText(),
                             txtCep.getText(),
-                            txtEndereco.getText());
+                            enderecoResponseDto.getLogradouro()+", "+enderecoResponseDto.getBairro()+", "+enderecoResponseDto.getLocalidade()+", "+enderecoResponseDto.getUf()
+                    );
 
                     try(OutputStream os = com.getOutputStream()) {
                         os.write(json.getBytes());
@@ -99,13 +114,13 @@ public class CadastroAdm {
                     }else {
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Erro");
-                        alert.setHeaderText("Algo deu errado. Verifique se este e-mail e/ou CPF já foram utilizados.");
+                        alert.setHeaderText("Algo deu errado. Verifique se este e-mail e/ou CPF são válidos.");
                         alert.showAndWait();
                     }
                     com.disconnect();
                 }
                 catch (Exception e){
-
+                    System.out.println(e.toString());
                 }
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -122,75 +137,7 @@ public class CadastroAdm {
         }
     }
 
-    public void consultarCep(ActionEvent event){
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle("Dados Digitados");
-//        alert.setHeaderText(null);
-//        alert.setContentText("CEP: " + txtCep.getText());
-//        alert.showAndWait();
-
-//            String json = String.format("{\"email\":\"%s\",\"senha\":\"%s\"}",txtCep.getText(),txtEndereco.getText());
-//
-//            try (OutputStream os = conn.getOutputStream()){
-//                os.write(json.getBytes());
-//            }
-
-        try {
-            var urlEndereco = "https://viacep.com.br/ws/"+txtCep.getText()+"/json/";
-            URL url = new  URL(urlEndereco);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Content-Type","application/json");
-
-
-            int status = conn.getResponseCode();
-
-            if(status == 200){
-                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                String inputLine;
-                StringBuilder response = new StringBuilder();
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
-                txtEndereco.setText(response.toString());
-
-                salvarEnderco(response.toString(),txtCep.getText());
-
-                enviarUsuarioAdmBanco(new ActionEvent());
-
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Validação de CEP");
-                alert.setHeaderText("CEP válido.");
-                alert.showAndWait();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Validação de CEP");
-                alert.setHeaderText("CEP inválido.");
-                alert.showAndWait();
-            }
-            conn.disconnect();
-        }catch (Exception e){
-
-        }
-    }
-
-    private boolean salvarEnderco(String endereco, String cep){
-
-        try {
-            EntityManager entityManager = JPAUtils.getEntityManager();
-            EnderecoDAO enderecoDAO = new EnderecoDAO(entityManager);
-            Endereco enderecoBanco = new Endereco();
-            enderecoBanco.setEndereco(endereco);
-            enderecoBanco.setCep(cep);
-
-            enderecoDAO.salvar(enderecoBanco);
-
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-
+    public void sair(){
+        System.exit(0);
     }
 }

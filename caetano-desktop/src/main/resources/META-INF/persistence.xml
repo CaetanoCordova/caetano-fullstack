@@ -8,14 +8,14 @@
     <persistence-unit name="caetanoPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class>com.senac.caetanodesktop.model.Endereco</class>
+        <class>com.senac.caetanodesktop.model.UsuarioAdm</class>
 
         <properties>
             <!-- Database connection settings -->
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/CaetanoFullstack"/>
             <property name="jakarta.persistence.jdbc.user" value="postgres"/>
-            <property name="jakarta.persistence.jdbc.password" value="caetas"/>
+            <property name="jakarta.persistence.jdbc.password" value="Sen@c2023"/>
 
             <!-- Hibernate settings -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>

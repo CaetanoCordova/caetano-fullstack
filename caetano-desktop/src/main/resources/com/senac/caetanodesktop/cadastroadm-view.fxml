@@ -3,9 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.senac.caetanodesktop.controller.CadastroAdm">
+<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.senac.caetanodesktop.controller.CadastroAdm">
     <children>
-        <Button layoutX="432.0" layoutY="355.0" mnemonicParsing="false" onAction="#voltar" text="Voltar" />
+        <Button layoutX="432.0" layoutY="355.0" mnemonicParsing="false" onAction="#sair" text="Sair" />
         <Button layoutX="19.0" layoutY="355.0" mnemonicParsing="false" onAction="#enviarUsuarioAdmBanco" text="Salvar" />
 
         <Label layoutX="24.0" layoutY="45.0" text="Chave:" />
@@ -16,13 +16,12 @@
         <Label layoutX="27.0" layoutY="280.0" text="CEP:" />
         <Label layoutX="20.0" layoutY="317.0" text="Enderço:" />
 
-        <TextArea fx:id="txtEndereco" disable="true" editable="false" layoutX="75.0" layoutY="306.0" prefHeight="25.0" prefWidth="350.0" />
-        <TextArea fx:id="txtSecret" layoutX="73.0" layoutY="34.0" prefHeight="38.0" prefWidth="350.0" />
-        <TextArea fx:id="txtNome" layoutX="73.0" layoutY="90.0" prefHeight="38.0" prefWidth="350.0" />
-        <TextArea fx:id="txtCpf" layoutX="73.0" layoutY="146.0" prefHeight="38.0" prefWidth="350.0" />
-
-        <TextField fx:id="txtCep" layoutX="73.0" layoutY="276.0" prefHeight="25.0" prefWidth="350.0" />
-        <TextField fx:id="txtEmail" layoutX="73.0" layoutY="205.0" prefHeight="25.0" prefWidth="350.0" />
-        <TextField fx:id="txtSenha" layoutX="73.0" layoutY="243.0" prefHeight="25.0" prefWidth="350.0" />
+        <TextField fx:id="txtSecret" layoutX="75.0" layoutY="33.0" prefHeight="25.0" prefWidth="350.0" />
+        <TextField fx:id="txtNome" layoutX="73.0" layoutY="76.0" prefHeight="25.0" prefWidth="350.0" />
+        <TextField fx:id="txtCpf" layoutX="75.0" layoutY="118.0" prefHeight="25.0" prefWidth="350.0" />
+        <TextField fx:id="txtEmail" layoutX="75.0" layoutY="162.0" prefHeight="25.0" prefWidth="350.0" />
+        <TextField fx:id="txtSenha" layoutX="75.0" layoutY="205.0" prefHeight="25.0" prefWidth="350.0" />
+        <TextField fx:id="txtCep" layoutX="75.0" layoutY="252.0" prefHeight="25.0" prefWidth="350.0" />
+        <TextField fx:id="txtEndereco" disable="true" editable="false" layoutX="75.0" layoutY="306.0" prefHeight="25.0" prefWidth="350.0" />
     </children>
 </AnchorPane>
