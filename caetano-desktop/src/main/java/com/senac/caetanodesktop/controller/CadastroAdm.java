@@ -21,13 +21,13 @@ import java.net.URL;
 public class CadastroAdm {
 
     @FXML
-    private TextArea txtSecret;
+    private TextField txtSecret;
 
     @FXML
-    private TextArea txtNome;
+    private TextField txtNome;
 
     @FXML
-    private TextArea txtCpf;
+    private TextField txtCpf;
 
     @FXML
     private TextField txtEmail;
@@ -36,7 +36,7 @@ public class CadastroAdm {
     private TextField txtSenha;
 
     @FXML
-    private TextArea txtEndereco;
+    private TextField txtEndereco;
 
     @FXML
     private TextField txtCep;
