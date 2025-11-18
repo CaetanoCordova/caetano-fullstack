@@ -3,12 +3,14 @@ package com.senac.AulaFullstack.presentation;
 import com.senac.AulaFullstack.application.dto.conta.ContaResponseDto;
 import com.senac.AulaFullstack.application.service.ContaService;
 import com.senac.AulaFullstack.domain.entity.Conta;
+import com.senac.AulaFullstack.domain.entity.Usuario;
 import com.senac.AulaFullstack.domain.repository.ContaRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,17 +57,33 @@ public class ContaController {
         return ResponseEntity.ok(contaService.consultarPaginaDoFiltrado(take, page, filtro));
     }
 
+//    @PostMapping
+//    @Operation(summary = "Cria uma conta nova.", description = "Método que cria as contas.")
+//    public ResponseEntity<?> salvaConta(@RequestBody Conta conta) {
+//        try {
+//            var contaResponse = contaRepository.save(conta);
+//
+//            return ResponseEntity.ok(contaResponse);
+//        } catch (Exception e) {
+//            return ResponseEntity.badRequest().build();
+//        }
+//    }
+
     @PostMapping
     @Operation(summary = "Cria uma conta nova.", description = "Método que cria as contas.")
-    public ResponseEntity<?> salvaConta(@RequestBody Conta conta) {
+    public ResponseEntity<?> salvaConta(
+            @RequestBody Conta conta,
+            @AuthenticationPrincipal Usuario usuarioLogado
+    ) {
         try {
+            conta.setUsuario(usuarioLogado);
             var contaResponse = contaRepository.save(conta);
-
             return ResponseEntity.ok(contaResponse);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
+
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza uma conta existente.", description = "Método que atualiza os dados de uma conta já registrada.")

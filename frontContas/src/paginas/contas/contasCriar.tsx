@@ -72,7 +72,7 @@ function ContasCriar() {
         />
       </div>
 
-      <div className="mb-2">
+      {/* <div className="mb-2">
         <label>Status:</label>
         <select
           value={conta.statusConta}
@@ -83,7 +83,7 @@ function ContasCriar() {
           <option value="PAGA">Paga</option>
           <option value="VENCIDA">Vencida</option>
         </select>
-      </div>
+      </div> */}
 
       <button type="submit" className="btn btn-primary me-2">
         Salvar

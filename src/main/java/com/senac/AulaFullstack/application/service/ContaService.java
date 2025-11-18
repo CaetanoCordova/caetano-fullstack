@@ -19,7 +19,7 @@ public class ContaService {
     private ContaRepository contaRepository;
 
     public Conta registrarContas(ContaCriarDto contaDto) {
-        return contaRepository.save(new Conta(null, contaDto.titulo(), contaDto.descricao(), contaDto.valor(), contaDto.dataVencimento(), StatusConta.PENDENTE));
+        return contaRepository.save(new Conta(null, contaDto.titulo(), contaDto.descricao(), contaDto.valor(), contaDto.dataVencimento(), StatusConta.PENDENTE, contaDto.usuario()));
     }
 
     public List<ContaResponseDto> consultarPaginaDoFiltrado(Long take, Long page, String filtro) {

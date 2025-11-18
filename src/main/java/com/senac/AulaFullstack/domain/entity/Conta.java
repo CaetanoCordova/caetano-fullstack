@@ -24,7 +24,7 @@ public class Conta {
     @Enumerated(EnumType.STRING)
     private StatusConta statusConta;
 
-//    @ManyToOne
-//    @JoinColumn(name = "usuario_id")
-//    private Usuario usuario;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 }
