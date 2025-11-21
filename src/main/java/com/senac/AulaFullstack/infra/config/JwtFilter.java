@@ -56,13 +56,13 @@ public class JwtFilter extends OncePerRequestFilter {
 
             } else {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Token não informado!");
+                response.getWriter().write("Token inválido. JwtFilter");
                 return;
             }
 
         }catch (Exception e){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Token não informado!");
+            response.getWriter().write("Token não informado! JwtFilter");
             return;
         }
     }

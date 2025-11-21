@@ -40,10 +40,8 @@ public class ContaController {
 
     @GetMapping
     @Operation(summary = "Retorna todas as contas existentes.", description = "Método que retorna todas as contas no banco.")
-
-    //@Operation(summary = "contas.", description = "Méthodo que calcula os custos da X e retorna o preço total da Y baseado em[...] (Regra de negócio).")
-    public ResponseEntity<?> consultaTodos() {
-
+    public ResponseEntity<?> consultaTodos(@AuthenticationPrincipal Usuario usuarioLogado) {
+        var contas = contaRepository.findByUsuarioId(usuarioLogado.getId());
         return ResponseEntity.ok(contaRepository.findAll());
     }
 

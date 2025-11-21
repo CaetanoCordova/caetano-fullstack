@@ -35,7 +35,6 @@ public class SecurityConfiguration {
                                 .requestMatchers("/swagger-ui/**").permitAll()
                                 .requestMatchers("/usuarios/cadastro").permitAll()
                                 .requestMatchers("/usuarios/adm").permitAll()
-                                .requestMatchers("/contas").authenticated()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
