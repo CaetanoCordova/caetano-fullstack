@@ -25,7 +25,7 @@ public class TokenService {
     @Value("${spring.tempo_expiracao}")
     private Long timeExpiration;
 
-    private String emissor = "SubFlow";
+    private String emissor = "Caetano";
 
     @Autowired
     private UsuarioRepository usuarioRepository;

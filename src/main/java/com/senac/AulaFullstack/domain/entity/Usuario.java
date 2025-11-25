@@ -50,8 +50,8 @@ public class Usuario implements UserDetails {
 
     private String tokenSenha;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Conta> contas = new ArrayList<>();
+//    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Conta> contas = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

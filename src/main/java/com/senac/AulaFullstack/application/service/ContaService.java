@@ -18,9 +18,9 @@ public class ContaService {
     @Autowired
     private ContaRepository contaRepository;
 
-    public Conta registrarContas(ContaCriarDto contaDto) {
-        return contaRepository.save(new Conta(null, contaDto.titulo(), contaDto.descricao(), contaDto.valor(), contaDto.dataVencimento(), StatusConta.PENDENTE, contaDto.usuario()));
-    }
+//    public Conta registrarContas(ContaCriarDto contaDto) {
+//        return contaRepository.save(new Conta(null, contaDto.titulo(), contaDto.descricao(), contaDto.valor(), contaDto.dataVencimento(), StatusConta.PENDENTE);
+//    }
 
     public List<ContaResponseDto> consultarPaginaDoFiltrado(Long take, Long page, String filtro) {
         return contaRepository.findAll()

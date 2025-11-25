@@ -9,6 +9,5 @@ public record ContaCriarDto(
     @JsonProperty("titulo") String titulo,
     @JsonProperty("descricao") String descricao,
     @JsonProperty("valor") Float valor,
-    @JsonProperty("dataVencimento") Date dataVencimento,
-    @JsonProperty("usuario_id") Usuario usuario){
+    @JsonProperty("dataVencimento") Date dataVencimento){
 }

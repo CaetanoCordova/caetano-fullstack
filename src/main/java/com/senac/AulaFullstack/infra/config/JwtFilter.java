@@ -1,6 +1,7 @@
 package com.senac.AulaFullstack.infra.config;
 
 import com.senac.AulaFullstack.application.service.TokenService;
+import com.senac.AulaFullstack.application.service.UsuarioService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +19,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -44,25 +48,27 @@ public class JwtFilter extends OncePerRequestFilter {
         try{
             if (header != null && header.startsWith("Bearer ")) {
                 String token = header.replace("Bearer ", "");
-                var usuario = tokenService.validarToken(token);
+                var usuarioPrincipalDto = tokenService.validarToken(token);
+
+                var usuario = usuarioService.buscarPorId(usuarioPrincipalDto.id());
 
                 var autorizacao = new UsernamePasswordAuthenticationToken(
                         usuario,
                         null,
-                        usuario.autorizacao());
+                        usuarioPrincipalDto.autorizacao());
                 SecurityContextHolder.getContext().setAuthentication(autorizacao);
 
                 filterChain.doFilter(request, response);
 
             } else {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Token inválido. JwtFilter");
+                response.getWriter().write("Token não informado!");
                 return;
             }
 
         }catch (Exception e){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("Token não informado! JwtFilter");
+            response.getWriter().write("Token não informado!");
             return;
         }
     }

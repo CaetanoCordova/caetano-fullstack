@@ -2,15 +2,16 @@ package com.senac.AulaFullstack.domain.entity;
 
 import com.senac.AulaFullstack.domain.enums.StatusConta;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.criteria.Fetch;
+import lombok.*;
+
 import java.util.Date;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Conta {
 
     @Id
@@ -24,7 +25,7 @@ public class Conta {
     @Enumerated(EnumType.STRING)
     private StatusConta statusConta;
 
-    @ManyToOne
+    @ManyToOne//(fetch=FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 }

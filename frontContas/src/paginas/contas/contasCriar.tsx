@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../services/api";
 
 interface Conta {
   titulo: string;
@@ -22,7 +22,7 @@ function ContasCriar() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await axios.post("http://localhost:8080/contas", conta);
+    await api.post("contas",conta);
     navigate("/contas");
   };
 

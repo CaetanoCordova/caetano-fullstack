@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../services/api";
 
 interface Conta {
   id: number;
@@ -17,12 +17,12 @@ function ContasEditar() {
   const [conta, setConta] = useState<Conta | null>(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/contas/${id}`).then((res) => setConta(res.data));
+    api.get(`contas/${id}`).then((res) => setConta(res.data));
   }, [id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await axios.put(`http://localhost:8080/contas/${id}`, conta);
+    await api.put(`contas/${id}`, conta);
     navigate("/contas"); // volta pra lista
   };
 

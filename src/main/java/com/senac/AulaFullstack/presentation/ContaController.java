@@ -1,9 +1,12 @@
 package com.senac.AulaFullstack.presentation;
 
+import com.senac.AulaFullstack.application.dto.conta.ContaAtualizarDto;
+import com.senac.AulaFullstack.application.dto.conta.ContaCriarDto;
 import com.senac.AulaFullstack.application.dto.conta.ContaResponseDto;
 import com.senac.AulaFullstack.application.service.ContaService;
 import com.senac.AulaFullstack.domain.entity.Conta;
 import com.senac.AulaFullstack.domain.entity.Usuario;
+import com.senac.AulaFullstack.domain.enums.StatusConta;
 import com.senac.AulaFullstack.domain.repository.ContaRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -40,9 +43,10 @@ public class ContaController {
 
     @GetMapping
     @Operation(summary = "Retorna todas as contas existentes.", description = "Método que retorna todas as contas no banco.")
-    public ResponseEntity<?> consultaTodos(@AuthenticationPrincipal Usuario usuarioLogado) {
-        var contas = contaRepository.findByUsuarioId(usuarioLogado.getId());
-        return ResponseEntity.ok(contaRepository.findAll());
+    public ResponseEntity<List<ContaResponseDto>> consultaTodos(@AuthenticationPrincipal Usuario usuario) {
+        var contas = contaRepository.findByUsuarioId(usuario.getId());
+        List<ContaResponseDto> response = contas.stream().map(conta -> new ContaResponseDto(conta)).toList();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/grid")
@@ -55,44 +59,39 @@ public class ContaController {
         return ResponseEntity.ok(contaService.consultarPaginaDoFiltrado(take, page, filtro));
     }
 
-//    @PostMapping
-//    @Operation(summary = "Cria uma conta nova.", description = "Método que cria as contas.")
-//    public ResponseEntity<?> salvaConta(@RequestBody Conta conta) {
-//        try {
-//            var contaResponse = contaRepository.save(conta);
-//
-//            return ResponseEntity.ok(contaResponse);
-//        } catch (Exception e) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
-
     @PostMapping
     @Operation(summary = "Cria uma conta nova.", description = "Método que cria as contas.")
     public ResponseEntity<?> salvaConta(
-            @RequestBody Conta conta,
-            @AuthenticationPrincipal Usuario usuarioLogado
+            @RequestBody ContaCriarDto contaDto,
+            @AuthenticationPrincipal Usuario usuario
     ) {
         try {
-            conta.setUsuario(usuarioLogado);
+            Conta conta = Conta.builder()
+                    .titulo(contaDto.titulo())
+                    .descricao(contaDto.descricao())
+                    .valor(contaDto.valor())
+                    .dataVencimento(contaDto.dataVencimento())
+                    .statusConta(StatusConta.PENDENTE)
+                    .usuario(usuario)
+                    .build();
             var contaResponse = contaRepository.save(conta);
+
             return ResponseEntity.ok(contaResponse);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
-
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza uma conta existente.", description = "Método que atualiza os dados de uma conta já registrada.")
-    public ResponseEntity<?> atualizaConta(@PathVariable Long id, @RequestBody Conta contaAtualizada) {
+    public ResponseEntity<?> atualizaConta(@PathVariable Long id, @RequestBody ContaAtualizarDto contaAtualizada) {
         return contaRepository.findById(id)
                 .map(conta -> {
-                    conta.setTitulo(contaAtualizada.getTitulo());
-                    conta.setDescricao(contaAtualizada.getDescricao());
-                    conta.setValor(contaAtualizada.getValor());
-                    conta.setDataVencimento(contaAtualizada.getDataVencimento());
-                    conta.setStatusConta(contaAtualizada.getStatusConta());
+                    conta.setTitulo(contaAtualizada.titulo());
+                    conta.setDescricao(contaAtualizada.descricao());
+                    conta.setValor(contaAtualizada.valor());
+                    conta.setDataVencimento(contaAtualizada.dataVencimento());
+                    conta.setStatusConta(contaAtualizada.statusConta());
 
                     var contaSalva = contaRepository.save(conta);
                     return ResponseEntity.ok(contaSalva);

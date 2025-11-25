@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loginSucesso } from "../../store/authSlice";
+import { store } from "../../store/store";
 import { LoginNovo, type LoginRequest} from "../../services/authService";
 
 function Login() {
@@ -37,14 +38,14 @@ function Login() {
             token:token
         }));
       }
+      const state = store.getState();
+      console.log (state.auth.token);
       navigator("/")
     }
   
     catch (error){
 
     }
-
-
   }
 
   return (
