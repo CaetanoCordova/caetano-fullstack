@@ -1,0 +1,86 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { loginSucesso } from "../../store/authSlice";
+import { store } from "../../store/store";
+import { LoginNovo, type LoginRequest} from "../../services/authService";
+
+function Login() {
+  const navigator = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const [formData, setFormData] = useState<LoginRequest>({
+    email:'',
+    senha:''
+  });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {name,value} = event.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]:value,
+    }))
+
+  }
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+
+      const loginResponse = await LoginNovo(formData);
+      const token = loginResponse.token;
+
+      console.log(token);
+      if(token!=null){
+          dispatch(loginSucesso({
+            usuario:{email:formData.email, nome: ""},
+            token:token
+        }));
+      }
+      const state = store.getState();
+      console.log (state.auth.token);
+      navigator("/")
+    }
+  
+    catch (error){
+
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="mb-3">
+        <label className="form-label">E-mail</label>
+        <input
+          type="text"
+          name="email"
+          id="senha"
+          className="form-control"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="Digite seu e-mail" />
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label">Senha</label>
+        <input
+          type="password"
+          name="senha"
+          id="senha"
+          className="form-control"
+          value={formData.senha}
+          onChange={handleChange}
+          placeholder="Digite sua senha" />
+      </div>
+
+      <button type="submit" className="btn btn-primary w-100">Entrar</button>
+
+      <p className="text-center mt-3">
+        Não tem conta? <Link to="/auth/cadastrese">Cadastre-se</Link>
+      </p>
+    </form>
+  );
+}
+
+export default Login;
