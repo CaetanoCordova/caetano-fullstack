@@ -19,17 +19,17 @@ function Recuperacao() {
     }))
 
   }
-
+  
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       await RecuperaNovo(formData);
       console.log ("funcionou");
-      navigator("/auth/codigo")
+      navigator("/auth/codigo", { state: { email: formData.email } })
     }
   
     catch (error){
-
+      console.error("Erro ao enviar email:", error);
     }
   }
 

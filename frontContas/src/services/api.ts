@@ -8,12 +8,9 @@ const api = axios.create({
 
 api.interceptors.request.use(
     (config)=>{
-
-        //consulta
         const state = store.getState();
         const token = state.auth.token;
-
-        console.log(token, "API");
+        //console.log(token, "API");
 
         if (token){
             config.headers.Authorization = `Bearer ${token}`;
@@ -30,7 +27,6 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
     (response) => {
-        // Se deu tudo certo (200, 201), apenas retorna a resposta
         return response;
     },
     (error) => {

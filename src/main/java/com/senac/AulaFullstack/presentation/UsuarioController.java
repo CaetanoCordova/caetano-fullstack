@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -86,6 +87,7 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualiza um usuario existente.", description = "Método que atualiza os dados de um usuario já registrada.")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> atualizaUsuario(@PathVariable Long id, @RequestBody UsuarioUpdateDto usuarioAtualizado) {
         return usuarioRepository.findById(id)
                 .map(usuario -> {
@@ -97,6 +99,18 @@ public class UsuarioController {
 
                     var usuarioSalvo = usuarioRepository.save(usuario);
                     return ResponseEntity.ok(usuarioSalvo);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Remove um usuario existente.", description = "Método que deleta um usuario pelo ID.")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> deletaUsuario(@PathVariable Long id) {
+        return usuarioRepository.findById(id)
+                .map(conta -> {
+                    usuarioRepository.delete(conta);
+                    return ResponseEntity.noContent().build();
                 })
                 .orElse(ResponseEntity.notFound().build());
     }

@@ -1,10 +1,11 @@
 package com.senac.AulaFullstack.application.dto.conta;
 
 import com.senac.AulaFullstack.domain.entity.Conta;
+import com.senac.AulaFullstack.domain.enums.StatusConta;
 
 import java.util.Date;
 
-public record ContaResponseDto (Long id, String titulo, String descricao, Float valor, Date dataVencimento){
+public record ContaResponseDto (Long id, String titulo, String descricao, Float valor, Date dataVencimento, StatusConta statusConta){
 
     public ContaResponseDto(Conta conta){
         this(
@@ -12,7 +13,8 @@ public record ContaResponseDto (Long id, String titulo, String descricao, Float 
                 conta.getTitulo(),
                 conta.getDescricao(),
                 conta.getValor(),
-                conta.getDataVencimento()
+                conta.getDataVencimento(),
+                conta.getStatusConta()
         );
     }
 }

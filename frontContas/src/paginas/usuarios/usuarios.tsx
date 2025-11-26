@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { buscarTodosUsuarios, type Usuario } from "../../services/usuarioService";
+import axios from "axios";
 
 function Usuarios() {
 
@@ -16,6 +17,13 @@ function Usuarios() {
         carregarUsuarios();
 
     }, []);
+    const handleDelete = async (id: number) => {
+    const confirmar = window.confirm("Tem certeza que deseja excluir esta conta?");
+    if (!confirmar) return;
+
+    await axios.delete(`http://localhost:8080/usuarios/${id}`);
+    setUsuarios(usuarios.filter((c) => c.id !== id));
+  };
 
   return (
     <div className="container mt-4">
@@ -48,12 +56,13 @@ function Usuarios() {
                     <button
                       className="btn btn-warning btn-sm me-2"
                     >
-                      Histórico
+                      Contas
                     </button>
                     <button
-                      className="btn btn-warning btn-sm"
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDelete(c.id)}
                     >
-                      Contas
+                      Deletar
                     </button>
                   </td>
               </tr>

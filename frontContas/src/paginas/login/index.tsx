@@ -2,51 +2,51 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loginSucesso } from "../../store/authSlice";
-import { store } from "../../store/store";
-import { LoginNovo, type LoginRequest} from "../../services/authService";
+import { LoginNovo, type LoginRequest} from "../../services/authService"; 
 
 function Login() {
-  const navigator = useNavigate();
+    const navigator = useNavigate();
+    const dispatch = useDispatch();
 
-  const dispatch = useDispatch();
+    const [formData, setFormData] = useState<LoginRequest>({
+      email:'',
+      senha:''
+    });
 
-  const [formData, setFormData] = useState<LoginRequest>({
-    email:'',
-    senha:''
-  });
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {name,value} = event.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]:value,
-    }))
-
-  }
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    try {
-
-      const loginResponse = await LoginNovo(formData);
-      const token = loginResponse.token;
-
-      console.log(token);
-      if(token!=null){
-          dispatch(loginSucesso({
-            usuario:{email:formData.email, nome: ""},
-            token:token
-        }));
-      }
-      const state = store.getState();
-      console.log (state.auth.token);
-      navigator("/contas")
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const {name,value} = event.target;
+      setFormData(prevState => ({
+        ...prevState,
+        [name]:value,
+      }))
     }
-  
-    catch (error){
 
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        try {
+            const loginResponse = await LoginNovo(formData);
+            const token = loginResponse.token;
+            const role = loginResponse.role;
+
+            if (token != null) {
+                dispatch(loginSucesso({
+                    usuario:{email:formData.email, nome: "", role: ""},
+                    token:token
+                }));
+            }
+            
+            if (role === 'ROLE_ADMIN') {
+                navigator("/adm/usuarios"); 
+            } else if (role === 'ROLE_USER') {
+                navigator("/contas"); 
+            } else {
+                navigator("/auth/login"); 
+            }
+
+        } catch (error){
+            console.error("Erro no login:", error);
+        }
     }
-  }
 
   return (
     <form onSubmit={handleSubmit}>

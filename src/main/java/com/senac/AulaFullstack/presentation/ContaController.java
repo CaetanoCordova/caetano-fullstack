@@ -29,8 +29,20 @@ public class ContaController {
     @Autowired
     private ContaRepository contaRepository;
 
+//    @GetMapping("/{id}")
+//    @Operation(summary = "Retorna uma conta pelo iD.", description = "Método que retorna uma conta específica através do iD.")
+//    public ResponseEntity<Conta> consultaPorId(@PathVariable Long id) {
+//        var conta = contaRepository.findById(id).orElse(null);
+//
+//        if (conta == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//        return ResponseEntity.ok(conta);
+//    }
+
     @GetMapping("/{id}")
-    @Operation(summary = "Retorna uma conta pelo iD.", description = "Método que retorna uma conta específica através do iD.")
+    @Operation(summary = "Retorna uma conta pelo iD de um usuário.", description = "Método que retorna uma conta específica através do iD de seu usuário específico.")
     public ResponseEntity<Conta> consultaPorId(@PathVariable Long id) {
         var conta = contaRepository.findById(id).orElse(null);
 
@@ -109,6 +121,7 @@ public class ContaController {
                 })
                 .orElse(ResponseEntity.notFound().build());
     }
+
 //    use este json
 //    {
 //        "titulo": "Conta de testes",

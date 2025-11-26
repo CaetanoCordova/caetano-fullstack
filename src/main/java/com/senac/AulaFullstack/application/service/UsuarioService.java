@@ -176,4 +176,9 @@ public class UsuarioService {
         return usuarioRepository.findById(id)
                 .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Não encontrado."));
     }
+
+    public Usuario buscarPorEmail(String email) {
+        return usuarioRepository.findByEmail(email)
+                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Não encontrado."));
+    }
 }

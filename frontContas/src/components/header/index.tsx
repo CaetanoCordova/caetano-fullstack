@@ -20,19 +20,12 @@ function Header() {
                     to="/contas"
                     className="text-white text-decoration-none"
                 >
-                    Home
-                </Link>
-                <Link
-                    to="/usuarios"
-                    className="text-white text-decoration-none"
-                >
-                    Usuarios
-                </Link>
-                <Link
-                    to="/contas"
-                    className="text-white text-decoration-none"
-                >
                     Contas
+                </Link>
+                <Link
+                    to="/contas/criar"
+                    className="text-white text-decoration-none">
+                    Criar contas
                 </Link>
                 <Link 
                     to="/auth/login" 

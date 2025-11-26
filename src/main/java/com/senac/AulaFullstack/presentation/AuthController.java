@@ -7,6 +7,7 @@ import com.senac.AulaFullstack.application.dto.login.LoginResponseDto;
 import com.senac.AulaFullstack.application.dto.usuario.UsuarioPrincipalDto;
 import com.senac.AulaFullstack.application.service.TokenService;
 import com.senac.AulaFullstack.application.service.UsuarioService;
+import com.senac.AulaFullstack.domain.entity.Usuario;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +32,13 @@ public class AuthController {
     @PostMapping("/login")
     @Operation(summary = "Login", description = "Método responsável pelo login de usuário com geração de token")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto request){
-
         if (!usuarioService.validarSenha(request)){
             return ResponseEntity.badRequest().body("Usuário e/ou senha inválido!");
         }
-
+        Usuario usuario = usuarioService.buscarPorEmail(request.email());
+        String role = usuario.getRole();
         var token = tokenService.gerarToken(request);
-
-        return ResponseEntity.ok(new LoginResponseDto(token));
+        return ResponseEntity.ok(new LoginResponseDto(token, role));
     }
 
     @PostMapping("/recuperarsenha/envio")

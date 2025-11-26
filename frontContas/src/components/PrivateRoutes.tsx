@@ -1,10 +1,22 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../store/store';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { useAuth } from './hooks/useAuth';
 
-const PrivateRoute = () => {
-    const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-    return isAuthenticated ? <Outlet /> : <Navigate to="/auth/login" replace />;
+interface PrivateRouteProps {
+    allowedRoles?: string[]; 
+}
+
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ allowedRoles }) => {
+    const { isAuthenticated, role } = useAuth();
+    const location = useLocation();
+
+    if (!isAuthenticated) {
+        return <Navigate to="/auth/login" state={{ from: location }} replace />;
+    }
+
+    if (allowedRoles && role && !allowedRoles.includes(role)) {
+        return <Navigate to="/contas" replace />; 
+    }
+    return <Outlet />;
 };
 
 export default PrivateRoute;

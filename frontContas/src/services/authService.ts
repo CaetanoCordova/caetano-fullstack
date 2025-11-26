@@ -7,12 +7,15 @@ export interface LoginRequest {
 
 export interface LoginResponse {
     token: string,
+    role: string
 }
 
 export async function LoginNovo(loginRequest : LoginRequest): Promise <LoginResponse> {
     const response = await api.post<LoginResponse>("auth/login", loginRequest)
     return response.data;
 }
+
+//-------- -------- -------- -------- -------- -------- -------- -------- 
 
 export interface RecuperaRequest {
     email: string
@@ -25,9 +28,9 @@ export async function RecuperaNovo(RecuperaRequest : RecuperaRequest): Promise <
     return response.data;
 }
 
+//-------- -------- -------- -------- -------- -------- -------- -------- 
+
 export interface CodigoRequest {
-    email: string,
-    senha: string,
     token: string
 }
 
@@ -35,6 +38,21 @@ export interface CodigoResponse {}
 
 export async function CodigoNovo(CodigoRequest : CodigoRequest): Promise <CodigoResponse> {
     const response = await api.post<CodigoResponse>("auth/alterarsenha", CodigoRequest)
+    return response.data;
+}
+
+//-------- -------- -------- -------- -------- -------- -------- -------- 
+
+export interface TrocasenhaRequest {
+    email: string,
+    senha: string,
+    token: string
+}
+
+export interface TrocasenhaResponse {}
+
+export async function TrocasenhaNovo(TrocasenhaRequest : TrocasenhaRequest): Promise <TrocasenhaResponse> {
+    const response = await api.post<TrocasenhaResponse>("auth/alterarsenha", TrocasenhaRequest)
     return response.data;
 }
 
