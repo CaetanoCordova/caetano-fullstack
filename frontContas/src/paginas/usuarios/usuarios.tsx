@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { buscarTodosUsuarios, type Usuario } from "../../services/usuarioService";
 
-function Usuario() {
+function Usuarios() {
 
     const [usuarios, setUsuarios] = useState<Usuario[]>([]);
 
@@ -65,4 +65,4 @@ function Usuario() {
   );
 }
 
-export default Usuario;
+export default Usuarios;

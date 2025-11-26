@@ -7,7 +7,6 @@ function LayoutAuth() {
 
         <div className="text-center mb-4">
           <h3 className="fw-bold">Minha Aplicação</h3>
-          <p className="text-muted">Bem-vindo! Faça login ou crie sua conta</p>
         </div>
         <Outlet />
       </div>

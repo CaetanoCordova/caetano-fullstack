@@ -30,11 +30,11 @@ const AuthSlice = createSlice({
             
         },
         logout:(state)=>{
-            state=estadoInicial
+            state=estadoInicial;
+            sessionStorage.removeItem('persist:root');
         }
     }
 })
 
 export const {loginSucesso,logout} = AuthSlice.actions;
 export default AuthSlice.reducer;
-

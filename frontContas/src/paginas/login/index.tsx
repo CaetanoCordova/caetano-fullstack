@@ -40,7 +40,7 @@ function Login() {
       }
       const state = store.getState();
       console.log (state.auth.token);
-      navigator("/")
+      navigator("/contas")
     }
   
     catch (error){
@@ -50,6 +50,8 @@ function Login() {
 
   return (
     <form onSubmit={handleSubmit}>
+      <p className="text-muted text-center">Bem-vindo! Essa é a tela de login</p>
+
       <div className="mb-3">
         <label className="form-label">E-mail</label>
         <input
@@ -78,6 +80,10 @@ function Login() {
 
       <p className="text-center mt-3">
         Não tem conta? <Link to="/auth/cadastrese">Cadastre-se</Link>
+      </p>
+
+      <p className="text-center mt-3">
+        Esqueceu sua senha? <Link to="/auth/recuperacao">Clique aqui</Link>
       </p>
     </form>
   );

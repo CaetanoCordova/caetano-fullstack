@@ -70,6 +70,8 @@ function Cadastrese() {
 
   return (
     <form onSubmit={handleSubmit}>
+      <p className="text-muted text-center">Bem-vindo! Essa é a tela de cadastro</p>
+
       <div className="mb-3">
         <label className="form-label">Nome</label>
         <input
