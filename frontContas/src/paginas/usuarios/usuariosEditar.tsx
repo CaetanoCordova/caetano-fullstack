@@ -2,31 +2,28 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../../services/api";
 
-interface Conta {
-  id: number;
-  titulo: string;
-  descricao: string;
-  valor: number;
-  dataVencimento: string;
-  statusConta: string;
+interface Usuario {
+  nome: string;
+  email: string;
+  cpf: string;
 }
 
-function ContasEditar() {
+function UsuariosEditar() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [conta, setConta] = useState<Conta | null>(null);
+  const [usuario, setUsuario] = useState<Usuario | null>(null);
 
   useEffect(() => {
-    api.get(`contas/${id}`).then((res) => setConta(res.data));
+    api.get(`usuarios/${id}`).then((res) => setUsuario(res.data));
   }, [id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await api.put(`contas/${id}`, conta);
-    navigate("/contas"); // volta pra lista
+    await api.put(`usuarios/${id}`, usuario);
+    navigate("/usuarios");
   };
 
-  if (!conta) return <p>Carregando...</p>;
+  if (!usuario) return <p>Carregando...</p>;
 
   return (
     <form onSubmit={handleSubmit}>
@@ -34,52 +31,30 @@ function ContasEditar() {
         <label>Título:</label>
         <input
           type="text"
-          value={conta.titulo}
-          onChange={(e) => setConta({ ...conta, titulo: e.target.value })}
+          value={usuario.nome}
+          onChange={(e) => setUsuario({ ...usuario, nome: e.target.value })}
           className="form-control"
         />
       </div>
 
       <div className="mb-2">
-        <label>Descrição:</label>
+        <label>E-mail:</label>
         <input
           type="text"
-          value={conta.descricao}
-          onChange={(e) => setConta({ ...conta, descricao: e.target.value })}
+          value={usuario.email}
+          onChange={(e) => setUsuario({ ...usuario, email: e.target.value })}
           className="form-control"
         />
       </div>
 
       <div className="mb-2">
-        <label>Valor:</label>
+        <label>CPF:</label>
         <input
-          type="number"
-          value={conta.valor}
-          onChange={(e) => setConta({ ...conta, valor: Number(e.target.value) })}
+          type="text"
+          value={usuario.cpf}
+          onChange={(e) => setUsuario({ ...usuario, cpf: e.target.value })}
           className="form-control"
         />
-      </div>
-
-      <div className="mb-2">
-        <label>Data de Vencimento:</label>
-        <input
-          type="date"
-          value={conta.dataVencimento.split("T")[0]}
-          onChange={(e) => setConta({ ...conta, dataVencimento: e.target.value })}
-          className="form-control"
-        />
-      </div>
-
-      <div className="mb-2">
-        <label>Status:</label>
-        <select
-          value={conta.statusConta}
-          onChange={(e) => setConta({ ...conta, statusConta: e.target.value })}
-          className="form-select"
-        >
-          <option value="PENDENTE">Pendente</option>
-          <option value="PAGA">Paga</option>
-        </select>
       </div>
 
       <button type="submit" className="btn btn-primary me-2">
@@ -88,6 +63,7 @@ function ContasEditar() {
       <button
         type="button"
         className="btn btn-secondary"
+        onClick={() => navigate(`/usuarios`)}
       >
         Cancelar
       </button>
@@ -95,4 +71,4 @@ function ContasEditar() {
   );
 }
 
-export default ContasEditar;
+export default UsuariosEditar;

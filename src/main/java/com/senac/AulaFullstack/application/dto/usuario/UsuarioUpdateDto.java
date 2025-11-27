@@ -5,6 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record UsuarioUpdateDto (
         @JsonProperty("nome") String nome,
         @JsonProperty("email") String email,
-        @JsonProperty("senha") String senha,
+        //@JsonProperty("senha") String senha,
         @JsonProperty("cpf") String cpf){
 }

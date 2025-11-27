@@ -23,10 +23,9 @@ function Contas() {
     return new Date(a.dataVencimento).getTime() - new Date(b.dataVencimento).getTime();
   });
 
-  // Deletar conta
   const handleDelete = async (id: number) => {
     const confirmar = window.confirm("Tem certeza que deseja excluir esta conta?");
-    if (!confirmar) return; // se cancelar, não faz nada
+    if (!confirmar) return; 
 
     await axios.delete(`http://localhost:8080/contas/${id}`);
     setContas(contas.filter((c) => c.id !== id));

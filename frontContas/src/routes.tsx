@@ -30,11 +30,14 @@ function App() {
           <Route path="contas/criar" element={<ContasCriar />} />
           <Route path="contas/:id/editar" element={<ContasEditar />} />
 
-          {/* <Route path="adm/contas (de um usuario selecionado)" element={<Contas />} /> */}
-          <Route path="adm/contas/:id/editar" element={<ContasEditar />} />
-          <Route path="adm/usuarios" element={<Usuarios />} />
-          <Route path="adm/usuarios/:id/editar" element={<UsuariosEditar />} />
-          <Route path="adm/usuarios/:id/deletar" element={<Usuarios />} />
+
+          <Route element={<PrivateRoute allowedRoles={['ROLE_ADMIN']} />}>
+            {/* <Route path="adm/contas (de um usuario selecionado)" element={<Contas />} /> */}
+            <Route path="contas/:id/editar" element={<ContasEditar />} />
+            <Route path="usuarios" element={<Usuarios />} />
+            <Route path="usuarios/:id/editar" element={<UsuariosEditar />} />
+            <Route path="usuarios/:id/deletar" element={<Usuarios />} />
+          </Route>
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/auth/login" />} />

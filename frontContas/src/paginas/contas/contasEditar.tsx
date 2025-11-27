@@ -86,8 +86,8 @@ function ContasEditar() {
         Salvar
       </button>
       <button
-        type="button"
-        className="btn btn-secondary"
+        className="btn btn-primary btn-sm me-2"
+        onClick={() => navigate(`/contas`)}
       >
         Cancelar
       </button>

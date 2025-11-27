@@ -36,7 +36,7 @@ function Login() {
             }
             
             if (role === 'ROLE_ADMIN') {
-                navigator("/adm/usuarios"); 
+                navigator("/usuarios"); 
             } else if (role === 'ROLE_USER') {
                 navigator("/contas"); 
             } else {

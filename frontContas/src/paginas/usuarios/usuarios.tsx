@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { buscarTodosUsuarios, type Usuario } from "../../services/usuarioService";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function Usuarios() {
-
+    const navigate = useNavigate();
     const [usuarios, setUsuarios] = useState<Usuario[]>([]);
 
-
     useEffect(() => {
-
         const carregarUsuarios = async () => {
             const usuarios = await buscarTodosUsuarios();
             setUsuarios(usuarios);
@@ -54,9 +53,15 @@ function Usuarios() {
                 <td>{c.role}</td>
                 <td>
                     <button
-                      className="btn btn-warning btn-sm me-2"
+                      className="btn btn-primary btn-sm me-2"
                     >
                       Contas
+                    </button>
+                    <button
+                      className="btn btn-warning btn-sm me-2"
+                      onClick={() => navigate(`/usuarios/${c.id}/editar`)}
+                    >
+                      Editar
                     </button>
                     <button
                       className="btn btn-danger btn-sm"
