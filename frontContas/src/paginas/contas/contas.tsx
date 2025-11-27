@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { buscarTodasContas, type Conta } from "../../services/contaService";
+import { buscarTodasContas, deletarConta, type Conta } from "../../services/contaService";
 
 function Contas() {
 
@@ -27,8 +27,14 @@ function Contas() {
     const confirmar = window.confirm("Tem certeza que deseja excluir esta conta?");
     if (!confirmar) return; 
 
-    await axios.delete(`http://localhost:8080/contas/${id}`);
-    setContas(contas.filter((c) => c.id !== id));
+    try {
+        await deletarConta(id);
+        setContas(contas.filter((c) => c.id !== id));
+        window.alert("Conta deletada.");
+
+    } catch (error) {
+        console.error("Erro ao deletar conta:", error);
+    }
   };
 
   return (

@@ -10,6 +10,10 @@ export interface Conta {
 }
 
 export async function buscarTodasContas():Promise<Conta[]> {
-    const response = await api.get<Conta[]>("/contas");
-    return response.data;
+  const response = await api.get<Conta[]>("/contas");
+  return response.data;
+}
+
+export async function deletarConta(id: number): Promise<void> { 
+  await api.delete(`/contas/${id}`); 
 }

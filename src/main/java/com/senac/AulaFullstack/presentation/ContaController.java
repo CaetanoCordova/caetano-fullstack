@@ -43,8 +43,8 @@ public class ContaController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Retorna uma conta pelo iD de um usuário.", description = "Método que retorna uma conta específica através do iD de seu usuário específico.")
-    public ResponseEntity<Conta> consultaPorId(@PathVariable Long id) {
-        var conta = contaRepository.findById(id).orElse(null);
+    public ResponseEntity<ContaResponseDto> consultaPorId(@PathVariable Long id) {
+        var conta = contaService.consultarPorId(id);
 
         if (conta == null) {
             return ResponseEntity.notFound().build();
@@ -56,7 +56,7 @@ public class ContaController {
     @GetMapping
     @Operation(summary = "Retorna todas as contas existentes.", description = "Método que retorna todas as contas no banco.")
     public ResponseEntity<List<ContaResponseDto>> consultaTodos(@AuthenticationPrincipal Usuario usuario) {
-        var contas = contaRepository.findByUsuarioId(usuario.getId());
+        var contas = contaService.findByUsuarioId(usuario.getId());
         List<ContaResponseDto> response = contas.stream().map(conta -> new ContaResponseDto(conta)).toList();
         return ResponseEntity.ok(response);
     }
@@ -86,7 +86,7 @@ public class ContaController {
                     .statusConta(StatusConta.PENDENTE)
                     .usuario(usuario)
                     .build();
-            var contaResponse = contaRepository.save(conta);
+            var contaResponse = contaService.salvarConta(conta);
 
             return ResponseEntity.ok(contaResponse);
         } catch (Exception e) {

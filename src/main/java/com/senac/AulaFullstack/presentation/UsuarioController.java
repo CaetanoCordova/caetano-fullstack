@@ -79,7 +79,7 @@ public class UsuarioController {
             usuario.setSenha(usuarioDto.senha());
             usuario.setRole("ROLE_USER");
             usuario.setDataCadastro(LocalDateTime.now());
-            Usuario usuarioSalvo = usuarioRepository.save(usuario);
+            Usuario usuarioSalvo = usuarioService.salvarUsuario(usuario);
             return ResponseEntity.ok(usuarioSalvo.toDtoResponse());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Erro ao criar usuário: " + e.getMessage());

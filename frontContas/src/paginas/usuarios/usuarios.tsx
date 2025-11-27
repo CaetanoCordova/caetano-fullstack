@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { buscarTodosUsuarios, type Usuario } from "../../services/usuarioService";
-import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { buscarTodosUsuarios, deletarUsuario, type Usuario } from "../../services/usuarioService";
+import { useNavigate } from "react-router-dom";
 
 function Usuarios() {
     const navigate = useNavigate();
@@ -17,12 +16,18 @@ function Usuarios() {
 
     }, []);
     const handleDelete = async (id: number) => {
-    const confirmar = window.confirm("Tem certeza que deseja excluir esta conta?");
-    if (!confirmar) return;
-
-    await axios.delete(`http://localhost:8080/usuarios/${id}`);
-    setUsuarios(usuarios.filter((c) => c.id !== id));
-  };
+      const confirmar = window.confirm("Tem certeza que deseja excluir este usuario?");
+      if (!confirmar) return; 
+  
+      try {
+          await deletarUsuario(id);
+          setUsuarios(usuarios.filter((c) => c.id !== id));
+          window.alert("Usuario deletada.");
+  
+      } catch (error) {
+          console.error("Erro ao deletar usuario:", error);
+      }
+    };
 
   return (
     <div className="container mt-4">

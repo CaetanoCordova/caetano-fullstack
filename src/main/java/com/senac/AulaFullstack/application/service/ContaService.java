@@ -2,7 +2,9 @@ package com.senac.AulaFullstack.application.service;
 
 import com.senac.AulaFullstack.application.dto.conta.ContaCriarDto;
 import com.senac.AulaFullstack.application.dto.conta.ContaResponseDto;
+import com.senac.AulaFullstack.application.dto.usuario.UsuarioResponseDto;
 import com.senac.AulaFullstack.domain.entity.Conta;
+import com.senac.AulaFullstack.domain.entity.Usuario;
 import com.senac.AulaFullstack.domain.enums.StatusConta;
 import com.senac.AulaFullstack.domain.repository.ContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,27 @@ public class ContaService {
                 .limit(take)
                 .map(ContaResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    public List<ContaResponseDto> consultarTodosSemFiltro() {
+        return contaRepository.findAll()
+                .stream()
+                .map(ContaResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<Conta> findByUsuarioId(Long usuario_id) {
+        return contaRepository.findByUsuarioId(usuario_id);
+    }
+
+    public Conta salvarConta(Conta conta) {
+        return contaRepository.save(conta);
+    }
+
+    public ContaResponseDto consultarPorId(Long id) {
+        return contaRepository.findById(id)
+                .map(ContaResponseDto::new)
+                .orElse(null);
     }
 
     //TODO Funções: Implementar a função para "pagar" uma conta e uma função que verifica e atualiza contas para o status VENCIDA.
