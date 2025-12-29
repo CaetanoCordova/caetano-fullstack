@@ -91,6 +91,15 @@ public class UsuarioService {
         return new AdmResponseDto(usuario);
     }
 
+    public boolean deletarUsuario(Long id) {
+        return usuarioRepository.findById(id)
+                .map(usuario -> {
+                    usuarioRepository.delete(usuario);
+                    return true;
+                })
+                .orElse(false);
+    }
+
     @Transactional
     public UsuarioResponseDto salvarUsuario(UsuarioRequestDto usuarioRequest) {
         var usuario = usuarioRepository.findByCpf(usuarioRequest.cpf())

@@ -108,12 +108,13 @@ public class UsuarioController {
     @Operation(summary = "Remove um usuario existente.", description = "Método que deleta um usuario pelo ID.")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deletaUsuario(@PathVariable Long id) {
-        return usuarioRepository.findById(id)
-                .map(conta -> {
-                    usuarioRepository.delete(conta);
-                    return ResponseEntity.noContent().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+
+        boolean foiDeletado = usuarioService.deletarUsuario(id);
+        if (foiDeletado) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/adm")
